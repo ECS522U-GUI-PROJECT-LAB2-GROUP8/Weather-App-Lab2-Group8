@@ -1,3 +1,3 @@
 # Weather-App
 
-Access token: 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
+Access token: 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
