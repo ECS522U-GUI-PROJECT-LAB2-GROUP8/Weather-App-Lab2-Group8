@@ -17,8 +17,12 @@ const getFonts = () => Font.loadAsync ({
 */
 
 export default function App() {
-  return(
-    <Navigator/>
+  return (
+    //<Navigator/>
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!!!!!n!</Text>
+      <StatusBar style="auto" />
+    </View>
   );
     //<View style={styles.container}>
     //  <Text>Open up App.js to start working on your app!</Text>
