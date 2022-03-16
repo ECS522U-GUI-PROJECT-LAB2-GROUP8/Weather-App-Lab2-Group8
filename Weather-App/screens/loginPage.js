@@ -1,9 +1,11 @@
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+ 
 
 const loginPage = ( {navigation} ) => {
     return (
         <View>
-            <Text>LOOOOOOOOL</Text>
+            <Text>LOOOOOOOOLTESTEST</Text>
         </View>
     );
 }

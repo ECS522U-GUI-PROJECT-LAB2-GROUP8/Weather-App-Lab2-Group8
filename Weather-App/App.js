@@ -3,20 +3,23 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar'; // Find use for this
 
 import * as Font from 'expo-font'; // Import customised fonts
-import { AppLoading } from 'expo'; // With importing fonts
-
-//import Home from './screens/home';
-import Navigator from './routes/homeStack';
+import { AppLoading } from 'expo'; // Used with importing fonts
 
 /*Pages*/
-import HomeScreenPage from './screens/homePage';
+import homePage from './screens/homePage';
 import loginPage from './screens/loginPage';
 
 /*Navigation Settings*/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { ScreenContainer } from 'react-native-screens';
+import { Button } from 'react-native-web';
+import { TabRouter } from 'react-navigation';
 
-// Need to get files first before doing this
+//import Navigator from './routes/homeStack'; //NOT USED anymore
+
+// Need to get font files first before doing this
 /**
 const getFonts = () => Font.loadAsync ({
  'nunito-regular': require('./assets/fonts/Nunito-Regular.ttf'),
@@ -31,6 +34,25 @@ const getFonts = () => Font.loadAsync ({
 //     </View>
 //   );
 // }
+
+const Stack = createNativeStackNavigator();
+
+const HomeStack = createStackNavigator();
+export const LoginStack = createStackNavigator();
+
+const HomePageScreen = () => (
+  <LoginStack.Navigator>
+    <LoginStack.Screen name="Home" component={homePage} />
+  </LoginStack.Navigator>
+)
+
+export const LoginPageScreen = () => (
+  <LoginStack.Navigator>
+    <LoginStack.Screen name="Login" component={loginPage} />
+  </LoginStack.Navigator>
+)
+
+/* NOT USED
 const loginpage = ( {navigation} ) => {
   return (
       <View>
@@ -38,20 +60,15 @@ const loginpage = ( {navigation} ) => {
       </View>
   );
 }
-
-const Stack = createNativeStackNavigator();
+*/
 
 const App = () => {
   return (
     
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!!!!!n!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={ HomeScreenPage } />
-        <Stack.Screen name="Loginpage" component={ loginpage } />
+      <Stack.Navigator>
+        <Stack.Screen name="HomePage" component={HomePageScreen}/>
+        <Stack.Screen name="ToLoginPage" component={LoginPageScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
