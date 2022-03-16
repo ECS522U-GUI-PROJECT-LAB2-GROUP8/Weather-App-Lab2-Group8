@@ -8,6 +8,11 @@ import { AppLoading } from 'expo'; // With importing fonts
 //import Home from './screens/home';
 import Navigator from './routes/homeStack';
 
+/*Pages*/
+import HomeScreenPage from './screens/homePage';
+import loginPage from './screens/loginPage';
+
+/*Navigation Settings*/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -19,42 +24,39 @@ const getFonts = () => Font.loadAsync ({
 });
 */
 
-function HomeScreen() {
+// function HomeScreen() {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Text>Home Screen TESTING HERE</Text>
+//     </View>
+//   );
+// }
+const loginpage = ( {navigation} ) => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen TESTING HERE</Text>
-    </View>
+      <View>
+          <Text>LOOOOOOOOL</Text>
+      </View>
   );
 }
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
-    //<Navigator/>
     
     // <View style={styles.container}>
     //   <Text>Open up App.js to start working on your app!!!!!n!</Text>
     //   <StatusBar style="auto" />
     // </View>
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen name="Home" component={ HomeScreenPage } />
+        <Stack.Screen name="Loginpage" component={ loginpage } />
       </Stack.Navigator>
     </NavigationContainer>
   );
-    /*
-    const [fontsLoaded, setFontsLoaded] = useState(false);
-      if(fontsLoaded){
-        return (
-          <Navigator /
-        );
-       } else {
-        return (
-          <AppLoading
-            startAsync={getFonts}
-            onFinish={() => setFontsLoaded (true)}
-    */
 }
+
+export default App;
 
 
