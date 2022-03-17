@@ -9,19 +9,21 @@ import { AppLoading } from 'expo'; // Used with importing fonts
 /*Pages*/
 import homePage from './screens/homePage';
 import loginPage from './screens/loginPage';
+import recommendationPage from './screens/recommendationPage';
+import settingsPage from './screens/settingsPage';
+import signUp from './screens/signUp';
 
 /*Navigation Settings*/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import { ScreenContainer } from 'react-native-screens';
 import { Button } from 'react-native-web';
 import { TabRouter } from 'react-navigation';
 
 // For navigation bar
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-//import Navigator from './routes/homeStack'; //NOT USED anymore
 
 // Need to get font files first before doing this
 /**
@@ -43,7 +45,11 @@ const HomePageScreen = () => (
 )
 
 export const LoginPageScreen = () => (
-  <LoginStack.Navigator>
+  <LoginStack.Navigator
+    screenOptions = {{
+      headerShown: false
+    }}  
+  >
     <LoginStack.Screen name="Login" component={loginPage} />
   </LoginStack.Navigator>
 )
@@ -53,6 +59,7 @@ function Home() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home Screen, implement js switch</Text>
+
     </View>
   );
 }
@@ -75,14 +82,15 @@ function DaysAhead() {
 
 const Drawer = createDrawerNavigator();
 
-
 function MyDrawer() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator 
+      initialRouteName="Home"
+    >
       <Drawer.Screen
         name="Home"
         component={Home}
-        options={{ drawerLabel: 'Home' }}
+        options={{ drawerLabel: 'Home'}}
       />
       <Drawer.Screen
         name="Suggestions"
@@ -94,26 +102,20 @@ function MyDrawer() {
         component={DaysAhead}
         options={{ drawerLabel: 'Days Ahead' }}
       />
+      <Drawer.Screen
+        name="Login"
+        component={LoginPageScreen}
+        options={{ drawerLabel: 'Login'}} 
+      />
     </Drawer.Navigator>
   );
 }
-
-/* NOT USED
-const loginpage = ( {navigation} ) => {
-  return (
-      <View>
-          <Text>LOOOOOOOOL</Text>
-      </View>
-  );
-}
-*/
 
 const App = () => {
   return (
     
     <NavigationContainer>
       <MyDrawer />
-      
     </NavigationContainer>
   );
 }
