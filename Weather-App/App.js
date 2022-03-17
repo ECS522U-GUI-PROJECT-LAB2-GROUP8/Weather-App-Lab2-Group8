@@ -69,7 +69,7 @@ function MyDrawer() {
       <Drawer.Screen
         name="Home"
         component={Home}
-        options={{ drawerLabel: 'Home' }}
+        options={{ drawerLabel: 'Home' , headerTitle:""  }}
       />
       <Drawer.Screen
         name="Suggestions"
