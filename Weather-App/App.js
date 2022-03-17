@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar'; // Find use for this
 
 /*Pages*/
 import homePage from './screens/homePage';
@@ -22,17 +21,18 @@ import { TabRouter } from 'react-navigation';
 // For navigation bar
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-
-const Stack = createNativeStackNavigator();
-
+/*Stack Navigators (create)*/ 
 export const HomeStack = createStackNavigator();
 export const LoginStack = createStackNavigator();
+export const Suggestion = createStackNavigator();
 
-const HomePageScreen = () => (
-  <LoginStack.Navigator>
-    <LoginStack.Screen name="Home" component={homePage} />
-  </LoginStack.Navigator>
+/*Navigation to pages*/
+export const HomePageScreen = () => (
+  <HomeStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
+    <HomeStack.Screen name="Home" component={homePage} />
+  </HomeStack.Navigator>
 )
 
 export const LoginPageScreen = () => (
@@ -44,6 +44,7 @@ export const LoginPageScreen = () => (
     <LoginStack.Screen name="Login" component={loginPage} />
   </LoginStack.Navigator>
 )
+
 
 /* NAV BAR */
 function Home() {
@@ -71,18 +72,16 @@ function DaysAhead() {
   );
 }
 
-/*Navigation function*/
+/*Navigation Drawer function*/
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
   return (
-    <Drawer.Navigator 
-      initialRouteName="Home"
-    >
+    <Drawer.Navigator>
       <Drawer.Screen
         name="Home"
-        component={Home}
-        options={{ drawerLabel: 'Home' , headerTitle:""  }}
+        component={HomePageScreen}
+        options={{ drawerLabel: 'Home'}}
 
       />
       <Drawer.Screen
