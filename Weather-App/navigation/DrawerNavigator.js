@@ -27,7 +27,9 @@ const DaysAheadStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 
 const HomePageScreen = () => (
-  <LoginStack.Navigator>
+  <LoginStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <LoginStack.Screen name="Home" component={homePage} />
   </LoginStack.Navigator>
 )
