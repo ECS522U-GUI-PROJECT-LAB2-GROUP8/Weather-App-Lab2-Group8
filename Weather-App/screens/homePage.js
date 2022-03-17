@@ -5,7 +5,7 @@ import { Stylesheet, View, Text, Button} from 'react-native';
 import loginPage from '../screens/loginPage';
 
 /*Navigation Settings*/
-import * as exportedConstApp from '../App.js';
+import * as AppComponents from '../App.js';
 
 /* NOTE TO READ 
 NAVIGATION GUIDE:
@@ -14,15 +14,14 @@ NAVIGATION GUIDE:
         - Screen with that name uses component "LoginPageScreen" which is just a made function to navigate to Login page.
 */
  
+// <Button title='Login page' onPress={() => navigation.navigate('ToLoginPage')}></Button>
 
 const HomePage  = ( { navigation } ) => {
     return (
         <View>
             <Text style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>This is home page. PLEASE SHOW</Text>
-            <Button title='Login page' onPress={() => navigation.navigate('ToLoginPage')}></Button>
         </View>
     );
-
 }
 
 export default HomePage;

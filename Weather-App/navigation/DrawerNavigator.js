@@ -12,17 +12,18 @@ import signUp from '../screens/signUp';
 
 /*Navigation Settings*/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // For navigation bar
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-
-const Stack = createNativeStackNavigator();
+import { ScreenContainer } from 'react-native-screens';
+import { Button } from 'react-native-web';
+import { TabRouter } from 'react-navigation';
 
 const HomeStack = createStackNavigator();
+const SuggestionStack = createStackNavigator();
+const DaysAheadStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 
 const HomePageScreen = () => (
@@ -31,66 +32,47 @@ const HomePageScreen = () => (
   </LoginStack.Navigator>
 )
 
+const SuggestionPageScreen = () => (
+  <LoginStack.Navigator>
+    <LoginStack.Screen name="Suggestion" component={recommendationPage} />
+  </LoginStack.Navigator>
+)
+
+const DaysAheadPageScreen = () => (
+  <LoginStack.Navigator>
+    <LoginStack.Screen name="Days Ahead" component={homePage} />
+  </LoginStack.Navigator>
+)
+
 const LoginPageScreen = () => (
-  <LoginStack.Navigator
-    screenOptions = {{
-      headerShown: false
-    }}  
-  >
+  <LoginStack.Navigator>
     <LoginStack.Screen name="Login" component={loginPage} />
   </LoginStack.Navigator>
 )
 
 /* NAV BAR */
-function Home() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen, implement js switch</Text>
-
-    </View>
-  );
-}
-
-function Suggestions() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Suggestion Screen, implement js switch</Text>
-    </View>
-  );
-}
-
-function DaysAhead() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Days ahead Screen, implement js switch</Text>
-    </View>
-  );
-}
 
 const Drawer = createDrawerNavigator();
-
 export function MyDrawer() {
   return (
-    <Drawer.Navigator 
-      initialRouteName="Home"
-    >
+    <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen
-        name="Home"
-        component={Home}
+        name="HomeScreen"
+        component={HomePageScreen}
         options={{ drawerLabel: 'Home'}}
       />
       <Drawer.Screen
-        name="Suggestions"
-        component={Suggestions}
+        name="SuggestionsScreen"
+        component={SuggestionPageScreen}
         options={{ drawerLabel: 'Suggestions' }}
       />
       <Drawer.Screen
-        name="DaysAhead"
-        component={DaysAhead}
+        name="DaysAheadScreen"
+        component={DaysAheadPageScreen}
         options={{ drawerLabel: 'Days Ahead' }}
       />
       <Drawer.Screen
-        name="Login"
+        name="LoginScreen"
         component={LoginPageScreen}
         options={{ drawerLabel: 'Login'}} 
       />
