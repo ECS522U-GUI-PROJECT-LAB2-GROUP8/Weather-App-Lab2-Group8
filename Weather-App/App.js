@@ -27,17 +27,9 @@ const getFonts = () => Font.loadAsync ({
 });
 */
 
-// function HomeScreen() {
-//   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Text>Home Screen TESTING HERE</Text>
-//     </View>
-//   );
-// }
-
 const Stack = createNativeStackNavigator();
 
-const HomeStack = createStackNavigator();
+export const HomeStack = createStackNavigator();
 export const LoginStack = createStackNavigator();
 
 const HomePageScreen = () => (
@@ -75,5 +67,3 @@ const App = () => {
 }
 
 export default App;
-
-
