@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'; // MUST BE TOP
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar'; // Find use for this
@@ -16,6 +17,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ScreenContainer } from 'react-native-screens';
 import { Button } from 'react-native-web';
 import { TabRouter } from 'react-navigation';
+
+// For navigation bar
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //import Navigator from './routes/homeStack'; //NOT USED anymore
 
@@ -44,6 +48,56 @@ export const LoginPageScreen = () => (
   </LoginStack.Navigator>
 )
 
+/* NAV BAR */
+function Home() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home Screen, implement js switch</Text>
+    </View>
+  );
+}
+
+function Suggestions() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Suggestion Screen, implement js switch</Text>
+    </View>
+  );
+}
+
+function DaysAhead() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Days ahead Screen, implement js switch</Text>
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen
+        name="Home"
+        component={Home}
+        options={{ drawerLabel: 'Home' }}
+      />
+      <Drawer.Screen
+        name="Suggestions"
+        component={Suggestions}
+        options={{ drawerLabel: 'Suggestions' }}
+      />
+      <Drawer.Screen
+        name="DaysAhead"
+        component={DaysAhead}
+        options={{ drawerLabel: 'Days Ahead' }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
 /* NOT USED
 const loginpage = ( {navigation} ) => {
   return (
@@ -58,12 +112,17 @@ const App = () => {
   return (
     
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="HomePage" component={HomePageScreen}/>
-        <Stack.Screen name="ToLoginPage" component={LoginPageScreen}/>
-      </Stack.Navigator>
+      <MyDrawer />
+      
     </NavigationContainer>
   );
 }
 
 export default App;
+
+/* Under navigation container, possibly later use
+<Stack.Navigator>
+        <Stack.Screen name="HomePage" component={HomePageScreen}/>
+        <Stack.Screen name="ToLoginPage" component={LoginPageScreen}/>
+      </Stack.Navigator>
+*/
