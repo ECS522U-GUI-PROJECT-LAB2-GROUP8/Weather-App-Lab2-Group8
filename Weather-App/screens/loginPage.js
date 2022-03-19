@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
  
 
-const loginPage = ( {navigation} ) => {
+const LoginPage = ( {navigation} ) => {
     return (
         <View>
-            <Text>LOOOOOOOOLTESTEST</Text>
+            <Text>Login Page</Text>
         </View>
     );
 }
  
-export default loginPage;
+export default LoginPage;
