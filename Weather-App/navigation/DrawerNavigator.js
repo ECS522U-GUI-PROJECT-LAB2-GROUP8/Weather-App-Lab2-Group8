@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 
 /*Pages*/
@@ -65,7 +65,7 @@ const LoginPageScreen = () => (
 const Drawer = createDrawerNavigator();
 export function MyDrawer() {
   return (
-    <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
+    <Drawer.Navigator screenOptions={{headerTransparent: true, headerTitle: "" }} initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
       <Drawer.Screen
         name="HomeScreen"
         component={HomePageScreen}
