@@ -21,7 +21,7 @@ const {Navigator, Screen} = createDrawerNavigator();
 export const RootDrawerNavigator = () => (
     <Navigator 
       initialRouteName="HomeScreen"
-      screenOptions={{headerTransparent: true, headerTitle: () => null}}
+      screenOptions={{headerTransparent: true, headerTitle: () => null}} //HeaderTitle removes name of screen appearing. headerTransparent was the true answer
     >
       <Screen
         name="HomeScreen"
