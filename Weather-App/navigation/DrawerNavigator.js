@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 
 /*Pages*/
@@ -15,7 +15,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // For navigation bar
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 
 import { ScreenContainer } from 'react-native-screens';
 import { Button } from 'react-native-web';
@@ -26,6 +26,8 @@ const SuggestionStack = createStackNavigator();
 const DaysAheadStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 
+/*Navigation rendering function components*/ 
+
 const HomePageScreen = () => (
   <LoginStack.Navigator screenOptions={{
     headerShown: false
@@ -35,29 +37,35 @@ const HomePageScreen = () => (
 )
 
 const SuggestionPageScreen = () => (
-  <LoginStack.Navigator>
+  <LoginStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <LoginStack.Screen name="Suggestion" component={recommendationPage} />
   </LoginStack.Navigator>
 )
 
 const DaysAheadPageScreen = () => (
-  <LoginStack.Navigator>
+  <LoginStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <LoginStack.Screen name="Days Ahead" component={homePage} />
   </LoginStack.Navigator>
 )
 
 const LoginPageScreen = () => (
-  <LoginStack.Navigator>
+  <LoginStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <LoginStack.Screen name="Login" component={loginPage} />
   </LoginStack.Navigator>
 )
 
-/* NAV BAR */
+/* Navigation Drawer BAR */
 
 const Drawer = createDrawerNavigator();
 export function MyDrawer() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator screenOptions={{headerTransparent: true, headerTitle: "" }} initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
       <Drawer.Screen
         name="HomeScreen"
         component={HomePageScreen}
@@ -66,7 +74,7 @@ export function MyDrawer() {
       <Drawer.Screen
         name="SuggestionsScreen"
         component={SuggestionPageScreen}
-        options={{ drawerLabel: 'Suggestions' }}
+        options={{ drawerLabel: 'Recommendation' }}
       />
       <Drawer.Screen
         name="DaysAheadScreen"
@@ -80,6 +88,29 @@ export function MyDrawer() {
       />
     </Drawer.Navigator>
   );
+}
+
+/*CSS Styling*/
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(4, 165, 255, 0.42)'
+    
+  }
+})
+
+/*Structure*/
+ 
+const CustomDrawer = (props) => {
+  return(
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props} contentContainerStyle = {{
+          }}>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+    </View>
+  )
 }
 
 export default MyDrawer;
