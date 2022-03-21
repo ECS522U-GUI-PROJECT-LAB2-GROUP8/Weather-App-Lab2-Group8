@@ -2,7 +2,6 @@ import  React, { useState, useEffect} from 'react';
 import { View, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
-import { and } from 'react-native-reanimated';
 
 /* NOTE TO READ 
 NAVIGATION GUIDE:
