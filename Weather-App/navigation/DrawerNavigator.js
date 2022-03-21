@@ -9,17 +9,17 @@ import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
 import settingsPage from '../screens/settingsPage';
 import signUp from '../screens/signUp';
+import wardrobePage from '../screens/wardrobePage';
+import addToWardrobePage from '../screens/addToWardrobePage';
 
 /*Navigation Settings*/
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // For navigation bar
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-
-import { ScreenContainer } from 'react-native-screens';
-import { Button } from 'react-native-web';
-import { TabRouter } from 'react-navigation';
+  // import { ScreenContainer } from 'react-native-screens';
+  // import { Button } from 'react-native-web';
+  // import { TabRouter } from 'react-navigation';
 
 const HomeStack = createStackNavigator();
 const SuggestionStack = createStackNavigator();
@@ -29,27 +29,35 @@ const LoginStack = createStackNavigator();
 /*Navigation rendering function components*/ 
 
 const HomePageScreen = () => (
-  <LoginStack.Navigator screenOptions={{
+  <HomeStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <LoginStack.Screen name="Home" component={homePage} />
-  </LoginStack.Navigator>
+    <HomeStack.Screen name="Home" component={homePage} />
+  </HomeStack.Navigator>
 )
 
 const SuggestionPageScreen = () => (
-  <LoginStack.Navigator screenOptions={{
+  <SuggestionStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <LoginStack.Screen name="Suggestion" component={recommendationPage} />
-  </LoginStack.Navigator>
+    <SuggestionStack.Screen name="Suggestion" component={recommendationPage} />
+  </SuggestionStack.Navigator>
 )
 
 const DaysAheadPageScreen = () => (
-  <LoginStack.Navigator screenOptions={{
+  <DaysAheadStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <LoginStack.Screen name="Days Ahead" component={homePage} />
-  </LoginStack.Navigator>
+    <DaysAheadStack.Screen name="Days Ahead" component={homePage} />
+  </DaysAheadStack.Navigator>
+)
+
+const WardrobePageScreen = () => (
+  <DaysAheadStack.Navigator screenOptions={{
+    headerShown: false
+  }}>
+    <DaysAheadStack.Screen name="Wardrobe" component={wardrobePage} />
+  </DaysAheadStack.Navigator>
 )
 
 const LoginPageScreen = () => (
@@ -65,7 +73,7 @@ const LoginPageScreen = () => (
 const Drawer = createDrawerNavigator();
 export function MyDrawer() {
   return (
-    <Drawer.Navigator screenOptions={{headerTransparent: true, headerTitle: "" }} initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
+    <Drawer.Navigator screenOptions={{headerTransparent: true, headerTitle: () => null }} initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
       <Drawer.Screen
         name="HomeScreen"
         component={HomePageScreen}
@@ -80,6 +88,11 @@ export function MyDrawer() {
         name="DaysAheadScreen"
         component={DaysAheadPageScreen}
         options={{ drawerLabel: 'Days Ahead' }}
+      />
+      <Drawer.Screen
+        name="WardrobeScreen"
+        component={WardrobePageScreen}
+        options={{ drawerLabel: 'Wardrobe' }}
       />
       <Drawer.Screen
         name="LoginScreen"
