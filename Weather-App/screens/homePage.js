@@ -86,9 +86,9 @@ const HomePage = () => {
         <LinearGradient style={{flex: 1}} colors={colourGradientDay}>
                 <ScrollView>
                     <View style= {todaysWeather.container}>
-                        <Text style={{fontSize:'50px', textAlign: 'center', color: 'white' }}>{temp}°C</Text>
+                        <Text style={{fontSize: 50, textAlign: 'center', color: 'white' }}>{temp}°C</Text>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={{fontSize: '16.5px', color: 'white'}}> {weatherType} </Text>
+                            <Text style={{fontSize: 16.5, color: 'white'}}> {weatherType} </Text>
                             <Image source={{uri: icon} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
                         </View>
                     </View>
@@ -144,8 +144,8 @@ const todaysWeather = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: ' rgba(0, 0, 0, 0)',
         width: '30%',
-        minHeight: '200',
-        marginTop: '100px',
+        minHeight: 200,
+        marginTop: 100,
         marginRight: '35%',
         marginLeft: '35%',
     }
@@ -158,8 +158,8 @@ const weekForeCastContainer = StyleSheet.create({
         textAlign: 'center', 
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         width: '84%', 
-        minHeight: '300',
-        marginTop: '300px' ,
+        minHeight: 300,
+        marginTop: 300 ,
         marginRight: '8%',
         marginLeft: '8%',
         borderRadius: 10,
