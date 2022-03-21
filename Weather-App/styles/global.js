@@ -1,19 +1,25 @@
 import { StyleSheet } from 'react-native';
 import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
+
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1, // dissapears content if not setting height
-        padding: 30,
-        backgroundColor: 'red',
+        margin: 24,
+    },
+    header: {
+        
     },
     titleText: {
-        //fontFamily:
-        //fontSize: 18,
-        //color: '#333', 
+        fontFamily: 'RobotoMono-Regular',
+        fontSize: 24,
+        fontWeight: '400',
+        color: '#FFFFFF', 
     },
-    boldText: {
-        fontWeight: 'bold',
+    text: {
+        fontFamily: 'RobotoMono-Regular',
+        fontSize: 16,
+        color: '#FFFFFF', 
     },
     buttonContainer: {
         marginTop: 20,
@@ -25,5 +31,9 @@ export const globalStyles = StyleSheet.create({
         padding: 8,
         margin: 10,
         width: 200,
+    },
+    boxWrap: {
+        borderRadius: 15,
+        backgroundColor: 'rgba(4, 165, 255, 0.45)',
     }
 });

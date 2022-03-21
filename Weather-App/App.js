@@ -1,32 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text } from 'react-native';
 
 import * as Font from 'expo-font'; // Import customised fonts
-import { AppLoading } from 'expo'; // Used with importing fonts
+import AppLoading from 'expo-app-loading'; // Used with importing fonts
 
 /* IMPORTS */
 import { globalStyles } from './styles/global';
 import { MyDrawer } from './navigation/DrawerNavigator';
-import TestApp from './TestApp';
 
 /*Navigation Settings*/
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 
+// Font function
+const getFonts = () => Font.loadAsync({
+    'RobotoMono-Regular': require('./assets/fonts/RobotoMono-Regular.ttf'),
+});
+
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <MyDrawer />
-    </NavigationContainer>
-  );
+  const [fontsLoaded, setsFontsLoaded] = useState(false);
+
+  if(fontsLoaded){
+    return (
+      <NavigationContainer>
+        <MyDrawer />
+      </NavigationContainer>
+  
+    );
+  } else {
+    return(
+      <AppLoading 
+        startAsync={getFonts}
+        onFinish={()=>setsFontsLoaded(true)}
+        onError={() => console.log('error')}
+      />
+    )
+  }
 }
-
-/* Under navigation container, possibly later use
-//const Stack = createNativeStackNavigator();
-
-<Stack.Navigator>
-        <Stack.Screen name="HomePage" component={HomePageScreen}/>
-        <Stack.Screen name="ToLoginPage" component={LoginPageScreen}/>
-      </Stack.Navigator>
-*/
 
