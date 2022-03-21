@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const LoginPage = ( {navigation} ) => {
     return (
         <View>
-            <Text>LOOOOOOOOLTESTEST</Text>
+            <Text>Login Page</Text>
         </View>
     );
 }

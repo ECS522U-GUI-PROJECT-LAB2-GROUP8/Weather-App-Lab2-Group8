@@ -1,6 +1,9 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
 
+import { StyleSheet, View } from 'react-native';
+
+
 /* Stacks, for drawer navigator to choose */
 import HomeStack from '../routes/homeStack';
 import SuggestionStack from '../routes/suggestionStack';
@@ -9,6 +12,7 @@ import WardrobeStack from '../routes/wardrobeStack';
 import LoginStack from '../routes/loginStack';
 
 /*Navigation Settings*/
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
   // import { ScreenContainer } from 'react-native-screens';

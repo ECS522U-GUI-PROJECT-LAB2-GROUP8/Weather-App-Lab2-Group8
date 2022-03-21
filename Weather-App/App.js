@@ -9,7 +9,9 @@ import { globalStyles } from './styles/global';
 import { AppNavigator } from './navigation/DrawerNavigator';
 
 /*Navigation Settings*/
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+
+import { NavigationContainer } from '@react-navigation/native';
+
 
 // Font function
 const getFonts = () => Font.loadAsync({
@@ -33,5 +35,3 @@ export default function App() {
       />
     )
   }
-}
-
