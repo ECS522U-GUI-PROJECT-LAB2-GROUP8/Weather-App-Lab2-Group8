@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { Stylesheet, View, Text, Button} from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Button} from 'react-native';
 
 /*Pages*/
 import loginPage from '../screens/loginPage';
 
 /*Navigation Settings*/
-import * as AppComponents from '../App.js';
+    //import * as AppComponents from '../App.js';
 
 /* NOTE TO READ 
 NAVIGATION GUIDE:

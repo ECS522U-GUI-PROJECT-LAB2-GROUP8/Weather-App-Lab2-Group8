@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 
 /*Pages*/
