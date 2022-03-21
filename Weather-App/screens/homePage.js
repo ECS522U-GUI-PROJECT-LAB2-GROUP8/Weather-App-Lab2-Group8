@@ -19,13 +19,15 @@ const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 const HomePage = () => {
 
+    //Todays temp Hook
     const [temp, setTemp] = useState([]);
     const [weatherType, setWeatherType] = useState()
     const [icon, setIcon] = useState('')
 
+    //Fetch data from API
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
-          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`).then(response => response.json()).then(data => {
+          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
                 console.log(data)                             //Comment out once done
                 //Temperature right now 
                 var tempValue = data['main']['temp']
@@ -34,48 +36,67 @@ const HomePage = () => {
                 //Weather Status
                 setWeatherType(data['weather']['0']['main'])
                 const weatherID = data['weather']['0']['id']
-                if (weatherID >= 800) {                             //Cloudy
-                    setIcon('https://i.imgur.com/JdvzIwe.png'); console.log("Cloudy")
-                } else if ( weatherID >= 200 && weatherID < 300 ) {     //Thunderstorm
+                if (weatherID === 800) {                                //Clear: 800
+                    setIcon('https://i.imgur.com/vS6lWXt.png'); console.log("Cloudy")
+                } else if ( weatherID >= 200 && weatherID < 300 ) {     //Thunderstorm: 2xx
                     setIcon('https://i.imgur.com/5TLF554.png'); console.log("Thunderstorm")
-                } else if ( weatherID >= 300 && weatherID < 600 ) {     //Thunderstorm
+                } else if ( weatherID >= 300 && weatherID < 600 ) {     //Drizzle/Rain: 3xx, 5xx
                     setIcon('https://i.imgur.com/8XxXEbo.png'); console.log("Drizzle/Rain")
+                } else if ( weatherID >= 600 && weatherID < 700 ) {     //Snow: 6xx
+                    setIcon('https://i.imgur.com/gs1CjgM.png'); console.log("Drizzle/Rain")
+                } else if ( weatherID >= 700 && weatherID < 800 ) {     //Atmosphere: 7xx
+                    setIcon('https://i.imgur.com/NTr6AsO.png'); console.log("Drizzle/Rain")
+                } else if ( weatherID > 800) {                          //Cloudy: 8xx
+                    setIcon('https://i.imgur.com/JdvzIwe.png'); console.log("Drizzle/Rain")
                 }
          })
         }
       }
+    
+    const [day0, setDay0] = useState('')
+
+    //Fetching forecase data (7-Day)
+    const fetchForecastData = (latitude, longitude) => {
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
+            console.log(data)
+            var dayZero = new Date(data['daily']['0']['dt'] * 1000).toLocaleString('en-GB', {weekday: 'short'})     //Mon
+            console.log(dayZero)
+            setDay0(dayZero)
+        })
+    }
   
+    //Granting location permission
     const loadForecast = async () => {
-  
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         //fetchDataFromApi("40.7128", "-74.0060")
         return;
       }
   
-      let location = await Location.getCurrentPositionAsync({});            //passing location details to
+      let location = await Location.getCurrentPositionAsync({highAccuracy: true});            //passing location details 
       fetchDataFromApi(location.coords.latitude, location.coords.longitude)
-
+      fetchForecastData(location.coords.latitude, location.coords.longitude)
     }
 
     useEffect(() => {loadForecast()}, [])
 
-  
+    //Colour Gradients
+    const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
 
     return (
-        <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
+        <LinearGradient style={{flex: 1}} colors={colourGradientDay}>
                 <ScrollView>
                     <View style= {todaysWeather.container}>
-                        <Text style={{fontSize:'50px', textAlign: 'center', color: 'white' }}>{temp- 273}°C</Text>
+                        <Text style={{fontSize:'50px', textAlign: 'center', color: 'white' }}>{temp}°C</Text>
                         <View style={{flexDirection: 'row'}}>
-                            <Text> {weatherType} </Text>
+                            <Text style={{fontSize: '16.5px', color: 'white'}}> {weatherType} </Text>
                             <Image source={{uri: icon} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
                         </View>
                     </View>
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
                             <Image source={ require('../icons/sun_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text>Mon</Text>
+                            <Text>{day0}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Image source={ require('../icons/partial_sun_and_cloud_icon.png') } style={{width:30, height:30}}></Image>
@@ -122,7 +143,7 @@ const todaysWeather = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: ' rgba(0, 0, 0, 0.18)',
+        backgroundColor: ' rgba(0, 0, 0, 0)',
         width: '30%',
         minHeight: '200',
         marginTop: '100px',
