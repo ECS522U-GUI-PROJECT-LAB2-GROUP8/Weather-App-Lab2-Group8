@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
+import {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 
 
@@ -24,6 +25,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '
 const HomeStack = createStackNavigator();
 const SuggestionStack = createStackNavigator();
 const DaysAheadStack = createStackNavigator();
+const WardrobeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 
 /*Navigation rendering function components*/ 
@@ -53,11 +55,12 @@ const DaysAheadPageScreen = () => (
 )
 
 const WardrobePageScreen = () => (
-  <DaysAheadStack.Navigator screenOptions={{
+  <WardrobeStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <DaysAheadStack.Screen name="Wardrobe" component={wardrobePage} />
-  </DaysAheadStack.Navigator>
+    <WardrobeStack.Screen name="Wardrobe" component={wardrobePage} />
+    <WardrobeStack.Screen name="AddWardrobe" component={addToWardrobePage}/>
+  </WardrobeStack.Navigator>
 )
 
 const LoginPageScreen = () => (
@@ -73,7 +76,10 @@ const LoginPageScreen = () => (
 const Drawer = createDrawerNavigator();
 export function MyDrawer() {
   return (
-    <Drawer.Navigator screenOptions={{headerTransparent: true, headerTitle: () => null }} initialRouteName="Home" drawerContent={props => <CustomDrawer {...props}/>}>
+    <Drawer.Navigator 
+      screenOptions={{headerTransparent: true, headerTitle: () => null }} 
+      initialRouteName="Home" 
+      drawerContent={props => <CustomDrawer {...props}/>}>
       <Drawer.Screen
         name="HomeScreen"
         component={HomePageScreen}

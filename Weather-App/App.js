@@ -7,7 +7,6 @@ import { MyDrawer } from './navigation/DrawerNavigator';
 /*Navigation Settings*/
 import { NavigationContainer } from '@react-navigation/native';
 
-
 const App = () => {
   return (
     <NavigationContainer>

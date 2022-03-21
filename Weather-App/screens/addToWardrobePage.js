@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../styles/global';
 
-export default function addWardrobe() {
+export default function addWardrobePage() {
     
     const [cloth, setCloth] = useState({name: 'Yellow T-shirt', category: 'top'});
 
