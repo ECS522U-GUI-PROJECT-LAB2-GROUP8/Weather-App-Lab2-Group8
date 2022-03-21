@@ -14,7 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
       </Stack.Navigator>
 */
 
-export default function Wardrobe() {    
+export default function WardrobePage() {    
     
     const pressHandler = () => {
         

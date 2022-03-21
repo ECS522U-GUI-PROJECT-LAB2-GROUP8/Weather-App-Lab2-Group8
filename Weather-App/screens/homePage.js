@@ -1,27 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button} from 'react-native';
 
+import { LinearGradient } from 'expo-linear-gradient';
+import { globalStyles } from '../styles/global';
+
 /*Pages*/
-import loginPage from '../screens/loginPage';
-
-/*Navigation Settings*/
-    //import * as AppComponents from '../App.js';
-
-/* NOTE TO READ 
-NAVIGATION GUIDE:
-    - Using const (which is like a variable for either holding a function or object) from App.js file by importing them with "import * from '../App.js' "
-    - Navigation.Navigate('ToLoginPage') finds created screen "ToLoginPage" we created, see App.js file for this
-        - Screen with that name uses component "LoginPageScreen" which is just a made function to navigate to Login page.
-*/
- 
-// <Button title='Login page' onPress={() => navigation.navigate('ToLoginPage')}></Button>
+//import loginPage from '../screens/loginPage';
 
 const HomePage = () => {
     return (
-        <View>
-            <Text style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>This is home page. PLEASE SHOW</Text>
-        </View>
+        <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
+            <View style={globalStyles.container}>
+                <Text>This is home page. PLEASE SHOW</Text>
+            </View>
+        </LinearGradient>
+        
     );
 }
-
 export default HomePage;

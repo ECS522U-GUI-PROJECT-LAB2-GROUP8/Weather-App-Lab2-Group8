@@ -6,7 +6,7 @@ import AppLoading from 'expo-app-loading'; // Used with importing fonts
 
 /* IMPORTS */
 import { globalStyles } from './styles/global';
-import { MyDrawer } from './navigation/DrawerNavigator';
+import { AppNavigator } from './navigation/DrawerNavigator';
 
 /*Navigation Settings*/
 import { NavigationContainer, StackActions } from '@react-navigation/native';
@@ -22,10 +22,7 @@ export default function App() {
 
   if(fontsLoaded){
     return (
-      <NavigationContainer>
-        <MyDrawer />
-      </NavigationContainer>
-  
+      <AppNavigator/>
     );
   } else {
     return(
