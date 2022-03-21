@@ -2,6 +2,7 @@ import  React, { useState, useEffect} from 'react';
 import { View, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
+import { and } from 'react-native-reanimated';
 
 /* NOTE TO READ 
 NAVIGATION GUIDE:
@@ -20,14 +21,26 @@ const HomePage = () => {
 
     const [temp, setTemp] = useState([]);
     const [weatherType, setWeatherType] = useState()
+    const [icon, setIcon] = useState('')
 
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`).then(response => response.json()).then(data => {
-              console.log(data)                             //Comment out once done
-              var tempValue = data['main']['temp']
-              setTemp(Math.round(tempValue))
-              setWeatherType( data['weather']['0']['main'])
+                console.log(data)                             //Comment out once done
+                //Temperature right now 
+                var tempValue = data['main']['temp']
+                setTemp(Math.round(tempValue))  
+
+                //Weather Status
+                setWeatherType(data['weather']['0']['main'])
+                const weatherID = data['weather']['0']['id']
+                if (weatherID >= 800) {                             //Cloudy
+                    setIcon('https://i.imgur.com/JdvzIwe.png'); console.log("Cloudy")
+                } else if ( weatherID >= 200 && weatherID < 300 ) {     //Thunderstorm
+                    setIcon('https://i.imgur.com/5TLF554.png'); console.log("Thunderstorm")
+                } else if ( weatherID >= 300 && weatherID < 600 ) {     //Thunderstorm
+                    setIcon('https://i.imgur.com/8XxXEbo.png'); console.log("Drizzle/Rain")
+                }
          })
         }
       }
@@ -56,7 +69,7 @@ const HomePage = () => {
                         <Text style={{fontSize:'50px', textAlign: 'center', color: 'white' }}>{temp- 273}°C</Text>
                         <View style={{flexDirection: 'row'}}>
                             <Text> {weatherType} </Text>
-                            <Text>XD</Text>
+                            <Image source={{uri: icon} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
                         </View>
                     </View>
                     <View style={weekForeCastContainer.container}>
