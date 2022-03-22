@@ -53,8 +53,14 @@ const HomePage = () => {
         }
       }
     
-    /**Icon useStates */
+    /**Day useStates */
     const [day0, setDay0] = useState('')
+    const [day1, setDay1] = useState('')
+    const [day2, setDay2] = useState('')
+    const [day3, setDay3] = useState('')
+    const [day4, setDay4] = useState('')
+    const [day5, setDay5] = useState('')
+    const [day6, setDay6] = useState('')
 
     /*Temp Usestates */ /*[MAX TEMP]*/
     const [temp0, setTemp0] = useState('')
@@ -70,6 +76,22 @@ const HomePage = () => {
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
             //Get next 7 days UNIX 
             var day00 = data['daily']['0']['dt']
+            var day11 = data['daily']['1']['dt']
+            var day22 = data['daily']['2']['dt']
+            var day33 = data['daily']['3']['dt']
+            var day44 = data['daily']['4']['dt']
+            var day55 = data['daily']['5']['dt']
+            var day66 = data['daily']['6']['dt']
+
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+            setDay0(days[(new Date(day00 * 1000)).getUTCDay()])
+            setDay1(days[(new Date(day11 * 1000)).getUTCDay()])
+            setDay2(days[(new Date(day22 * 1000)).getUTCDay()])
+            setDay3(days[(new Date(day33 * 1000)).getUTCDay()])
+            setDay4(days[(new Date(day44 * 1000)).getUTCDay()])
+            setDay5(days[(new Date(day55 * 1000)).getUTCDay()])
+            setDay6(days[(new Date(day66 * 1000)).getUTCDay()])
 
 
             //Get next 7 days MaxTemp
@@ -92,11 +114,6 @@ const HomePage = () => {
 
 
             console.log(data)
-
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-            console.log(days[(new Date(day00 * 1000)).getUTCDay()])
-            console.log((new Date(day00 * 1000)))
             // var dayZero = new Date()    //Mon
             // console.log(dayZero)
             // setDay0(dayZero)
@@ -136,37 +153,37 @@ const HomePage = () => {
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp0}°C</Text>
                             <Image source={ require('../icons/sun_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Mon</Text>
+                            <Text style={textDay.container} >{day0}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp1}°C</Text>
                             <Image source={ require('../icons/partial_sun_and_cloud_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Tue</Text>
+                            <Text style={textDay.container} >{day1}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp2}°C</Text>
                             <Image source={ require('../icons/cloud_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Wed</Text>
+                            <Text style={textDay.container} >{day2}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp3}°C</Text>
                             <Image source={ require('../icons/cloud_with_rain_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Thu</Text>
+                            <Text style={textDay.container} >{day3}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp4}°C</Text>
                             <Image source={ require('../icons/thunder_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Fri</Text>
+                            <Text style={textDay.container} >{day4}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp5}°C</Text>
                             <Image source={ require('../icons/sunny_with_fog_icon.png') } style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Sat</Text>
+                            <Text style={textDay.container} >{day5}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp6}°C</Text>
                             <Image source={ require('../icons/snow_icon.png') }style={{width:30, height:30}}></Image>
-                            <Text style={textDay.container} >Sun</Text>
+                            <Text style={textDay.container} >{day6}</Text>
                         </View>
                     </View>
             </ScrollView>
