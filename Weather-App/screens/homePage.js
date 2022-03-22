@@ -27,7 +27,7 @@ const HomePage = () => {
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
-                console.log(data)                             //Comment out once done
+                //console.log(data)                             //Comment out once done
                 console.log("===================================================================================================================================")
                 //Temperature right now 
                 var tempValue = data['main']['temp']
@@ -62,6 +62,15 @@ const HomePage = () => {
     const [day5, setDay5] = useState('')
     const [day6, setDay6] = useState('')
 
+    //Icon change useStates
+    const [dayIcon0, setDayIcon0] = useState('')
+    const [dayIcon1, setDayIcon1] = useState('')
+    const [dayIcon2, setDayIcon2] = useState('')
+    const [dayIcon3, setDayIcon3] = useState('')
+    const [dayIcon4, setDayIcon4] = useState('')
+    const [dayIcon5, setDayIcon5] = useState('')
+    const [dayIcon6, setDayIcon6] = useState('')
+
     /*Temp Usestates */ /*[MAX TEMP]*/
     const [temp0, setTemp0] = useState('')
     const [temp1, setTemp1] = useState('')
@@ -93,6 +102,35 @@ const HomePage = () => {
             setDay5(days[(new Date(day55 * 1000)).getUTCDay()])
             setDay6(days[(new Date(day66 * 1000)).getUTCDay()])
 
+            //Get weather id for next 7 days and change accordingly
+
+            function iconStatus(weatherID) {
+                if (weatherID === 800) {                                //Clear: 800
+                    return ('https://i.imgur.com/vS6lWXt.png'); //console.log("Cloudy")
+                } else if ( weatherID >= 200 && weatherID < 300 ) {     //Thunderstorm: 2xx
+                    return('https://i.imgur.com/5TLF554.png'); //console.log("Thunderstorm")
+                } else if ( weatherID >= 300 && weatherID < 600 ) {     //Drizzle/Rain: 3xx, 5xx
+                    return('https://i.imgur.com/8XxXEbo.png'); //console.log("Drizzle/Rain")
+                } else if ( weatherID >= 600 && weatherID < 700 ) {     //Snow: 6xx
+                    return('https://i.imgur.com/gs1CjgM.png'); //console.log("Drizzle/Rain")
+                } else if ( weatherID >= 700 && weatherID < 800 ) {     //Atmosphere: 7xx
+                    return('https://i.imgur.com/NTr6AsO.png'); //console.log("Cloudy")
+                } else if ( weatherID > 800) {                          //Cloudy: 8xx
+                    return('https://i.imgur.com/JdvzIwe.png'); //console.log("Drizzle/Rain")
+                }
+            }      
+        
+            function iconStates () {
+                setDayIcon0(iconStatus(data['daily']['0']['weather']['0']['id']))
+                setDayIcon1(iconStatus(data['daily']['1']['weather']['0']['id']))
+                setDayIcon2(iconStatus(data['daily']['2']['weather']['0']['id']))
+                setDayIcon3(iconStatus(data['daily']['3']['weather']['0']['id']))
+                setDayIcon4(iconStatus(data['daily']['4']['weather']['0']['id']))
+                setDayIcon5(iconStatus(data['daily']['5']['weather']['0']['id']))
+                setDayIcon6(iconStatus(data['daily']['6']['weather']['0']['id']))
+            }
+            iconStates()
+
 
             //Get next 7 days MaxTemp
             var temp00 = data['daily']['0']['temp']['max']
@@ -112,11 +150,6 @@ const HomePage = () => {
             setTemp5(Math.round(temp55))
             setTemp6(Math.round(temp66))
 
-
-            console.log(data)
-            // var dayZero = new Date()    //Mon
-            // console.log(dayZero)
-            // setDay0(dayZero)
 
         })
     }
@@ -152,37 +185,37 @@ const HomePage = () => {
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp0}°C</Text>
-                            <Image source={ require('../icons/sun_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon0} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day0}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp1}°C</Text>
-                            <Image source={ require('../icons/partial_sun_and_cloud_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon1} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day1}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp2}°C</Text>
-                            <Image source={ require('../icons/cloud_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon2} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day2}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp3}°C</Text>
-                            <Image source={ require('../icons/cloud_with_rain_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon3} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day3}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp4}°C</Text>
-                            <Image source={ require('../icons/thunder_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon4} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day4}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp5}°C</Text>
-                            <Image source={ require('../icons/sunny_with_fog_icon.png') } style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon5} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day5}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp6}°C</Text>
-                            <Image source={ require('../icons/snow_icon.png') }style={{width:30, height:30}}></Image>
+                            <Image source={ {uri: dayIcon6}  }style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day6}</Text>
                         </View>
                     </View>
