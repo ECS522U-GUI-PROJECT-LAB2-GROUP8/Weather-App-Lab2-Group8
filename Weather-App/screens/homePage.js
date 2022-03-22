@@ -15,23 +15,22 @@ NAVIGATION GUIDE:
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
-
 const HomePage = () => {
 
     //Todays temp Hook
     const [temp, setTemp] = useState([]);
-    const [weatherType, setWeatherType] = useState()
-    const [icon, setIcon] = useState('')
+    const [weatherType, setWeatherType] = useState();
+    const [icon, setIcon] = useState('');
 
     //Fetch data from API
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
-                //console.log(data)                             //Comment out once done
+                console.log(data)                             //Comment out once done
                 console.log("===================================================================================================================================")
                 //Temperature right now 
-                var tempValue = data['main']['temp']
-                setTemp(Math.round(tempValue))  
+                var tempValue = data['main']['temp'];
+                setTemp(Math.round(tempValue));
 
                 //Weather Status
                 setWeatherType(data['weather']['0']['main'])
@@ -52,6 +51,7 @@ const HomePage = () => {
          })
         }
       }
+    /* 7 DAY FORECAST ================================================================================================================ */
     
     /**Day useStates */
     const [day0, setDay0] = useState('')
@@ -80,10 +80,17 @@ const HomePage = () => {
     const [temp5, setTemp5] = useState('')
     const [temp6, setTemp6] = useState('')
 
+    /*Humid, UV, and wind usestates */
+
+    const [humidity, setHumidity] = useState('')
+    const [UV, setUV] = useState('')
+    const [wind, setWind] = useState('')
+
     //Fetching forecase data (7-Day)
     const fetchForecastData = (latitude, longitude) => {
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
-            //Get next 7 days UNIX 
+
+            //Get next 7 days datetime in UNIX form
             var day00 = data['daily']['0']['dt']
             var day11 = data['daily']['1']['dt']
             var day22 = data['daily']['2']['dt']
@@ -102,7 +109,7 @@ const HomePage = () => {
             setDay5(days[(new Date(day55 * 1000)).getUTCDay()])
             setDay6(days[(new Date(day66 * 1000)).getUTCDay()])
 
-            //Get weather id for next 7 days and change accordingly
+            //Get weather id for next 7 days and change accordingly and return the appropriate image via the function below
 
             function iconStatus(weatherID) {
                 if (weatherID === 800) {                                //Clear: 800
@@ -132,7 +139,7 @@ const HomePage = () => {
             iconStates()
 
 
-            //Get next 7 days MaxTemp
+            //Get next 7 days [MAX-TEMP]
             var temp00 = data['daily']['0']['temp']['max']
             var temp11 = data['daily']['1']['temp']['max']
             var temp22 = data['daily']['2']['temp']['max']
@@ -150,7 +157,17 @@ const HomePage = () => {
             setTemp5(Math.round(temp55))
             setTemp6(Math.round(temp66))
 
+            
+            //Humidity, UV, wind stats
+            var humidityData = data['current']['humidity'];
+            var UVData = data['current']['uvi'];
+            var WindData = data['current']['wind_speed'];
 
+            setHumidity(humidityData);
+            setUV(UVData);
+            setWind(WindData);
+
+            //console.log(data)
         })
     }
   
@@ -172,6 +189,7 @@ const HomePage = () => {
     //Colour Gradients
     const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
 
+    /*OUTPUT============================================================================================================================ */
     return (
         <LinearGradient style={{flex: 1}} colors={colourGradientDay}>
                 <ScrollView>
@@ -179,49 +197,69 @@ const HomePage = () => {
                         <Text style={{fontSize: 50, textAlign: 'center', color: 'white' }}>{temp}°C</Text>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{fontSize: 16.5, color: 'white'}}> {weatherType} </Text>
-                            <Image source={{uri: icon} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
+                            <Image source={{uri: icon.toString()} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
                         </View>
+                    </View>
+                    <View style={locationAndTime.container}>
+                        <Text>Location</Text>
                     </View>
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp0}°C</Text>
-                            <Image source={ {uri: dayIcon0} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon0.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day0}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp1}°C</Text>
-                            <Image source={ {uri: dayIcon1} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon1.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day1}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp2}°C</Text>
-                            <Image source={ {uri: dayIcon2} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon2.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day2}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp3}°C</Text>
-                            <Image source={ {uri: dayIcon3} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon3.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day3}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp4}°C</Text>
-                            <Image source={ {uri: dayIcon4} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon4.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day4}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp5}°C</Text>
-                            <Image source={ {uri: dayIcon5} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon5.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day5}</Text>
                         </View>
                         <View style={individualDay.container}>
                             <Text style={tempDaily.container} >{temp6}°C</Text>
-                            <Image source={ {uri: dayIcon6}  }style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                            <Image source={ {uri: dayIcon6.toString()}  }style={{width:30, height:30, resizeMode: 'contain'}}></Image>
                             <Text style={textDay.container} >{day6}</Text>
                         </View>
                     </View>
+                    <View style={extraSection.container} >
+                        <View style= { extraSectionIndividualStat.container}>
+                            <Image source={ require('../icons/humid_drop.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                            <Text style ={extraSectionIndividualText.container} >Humidity</Text>
+                            <Text style ={extraSectionIndividualText.container} >{humidity}%</Text>
+                        </View>
+                        <View style= { extraSectionIndividualStat.container}>
+                            <Image source={ require('../icons/UV_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                            <Text style ={extraSectionIndividualText.container} >UV Index</Text>
+                            <Text style ={extraSectionIndividualText.container} >{UV}</Text>
+                        </View>
+                        <View style= { extraSectionIndividualStat.container}>
+                            <Image source={ require('../icons/wind_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                            <Text style ={extraSectionIndividualText.container} >Wind</Text>
+                            <Text style ={extraSectionIndividualText.container} >{wind}km/h</Text>
+                        </View>
+
+                    </View>
             </ScrollView>
         </LinearGradient>
-       
     );
 }
 
@@ -248,6 +286,12 @@ const todaysWeather = StyleSheet.create({
     }
 })
 
+const locationAndTime = StyleSheet.create({
+    container: {
+        marginLeft: '8%',
+    }
+})
+
 const weekForeCastContainer = StyleSheet.create({
     container: {
         justifyContent: 'center',
@@ -255,11 +299,11 @@ const weekForeCastContainer = StyleSheet.create({
         textAlign: 'center', 
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         width: '84%', 
-        minHeight: 120,
+        minHeight: 130,
         marginTop: 100 ,
         marginRight: '8%',
         marginLeft: '8%',
-        borderRadius: 10,
+        borderRadius: 20,
         padding: 5,
         flexDirection: 'row',
     }
@@ -286,6 +330,37 @@ const tempDaily = StyleSheet.create({
     }
 })
 
+const extraSection = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center', 
+        backgroundColor: ' rgba(0, 0, 0, 0.18)',
+        width: '84%', 
+        minHeight: 150,
+        marginTop: 40 ,
+        marginRight: '8%',
+        marginLeft: '8%',
+        borderRadius: 20,
+        padding: 5,
+        flexDirection: 'row',
+    }
+})
 
+const extraSectionIndividualStat = StyleSheet.create({
+    container: {
+        marginRight: '8%',
+        marginLeft: '8%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})
+
+const extraSectionIndividualText = StyleSheet.create({
+    container: {
+        marginTop: '15%',
+        color: 'white',
+    }
+})
 
 export default HomePage;
