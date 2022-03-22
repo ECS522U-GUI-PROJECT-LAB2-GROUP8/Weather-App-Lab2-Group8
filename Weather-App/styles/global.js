@@ -18,7 +18,7 @@ export const globalStyles = StyleSheet.create({
         color: '#FFFFFF', 
     },
     text: {
-        fontFamily: 'RobotoMono-Regular',
+        //fontFamily: 'RobotoMono-Regular',
         fontSize: 16,
         color: '#FFFFFF', 
     },

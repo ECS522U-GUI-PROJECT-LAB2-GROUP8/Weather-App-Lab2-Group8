@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../styles/global';
@@ -39,7 +39,15 @@ export default function WardrobePage({navigation}) {
                 </View>
             </ScrollView>
             
+            <Modal visible={true}>
+            <View style={globalStyles.modalContent}>
+                <Text>Add to wardrobe modal</Text>
+            </View>
+
+        </Modal>
 
         </LinearGradient>
+
+        
     );
   }
