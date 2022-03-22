@@ -22,6 +22,8 @@ const HomePage = () => {
     const [weatherType, setWeatherType] = useState();
     const [icon, setIcon] = useState('');
 
+    //Location and time
+
     //Fetch data from API
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
