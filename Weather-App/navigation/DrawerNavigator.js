@@ -11,7 +11,6 @@ import recommendationPage from '../screens/recommendationPage';
 import settingsPage from '../screens/settingsPage';
 import signUp from '../screens/signUp';
 import wardrobePage from '../screens/wardrobePage';
-import addToWardrobePage from '../screens/addToWardrobePage';
 
 /*Navigation Settings*/
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,7 +58,6 @@ const WardrobePageScreen = () => (
     headerShown: false
   }}>
     <WardrobeStack.Screen name="Wardrobe" component={wardrobePage} />
-    <WardrobeStack.Screen name="AddWardrobe" component={addToWardrobePage}/>
   </WardrobeStack.Navigator>
 )
 
