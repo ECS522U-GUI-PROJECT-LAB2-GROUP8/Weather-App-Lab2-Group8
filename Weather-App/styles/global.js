@@ -8,6 +8,10 @@ export const globalStyles = StyleSheet.create({
         margin: 24,
         marginTop: 70,
     },
+    modalContent: {
+        flex: 1,
+        marginHorizontal: 24,
+    },
     header: {
         
     },
@@ -18,23 +22,27 @@ export const globalStyles = StyleSheet.create({
         color: '#FFFFFF', 
     },
     text: {
-        fontFamily: 'RobotoMono-Regular',
+        //fontFamily: 'RobotoMono-Regular',
         fontSize: 16,
         color: '#FFFFFF', 
     },
-    buttonContainer: {
-        marginTop: 20,
-        //padding: 20,
-    },
     input: {
         borderWidth: 1, // By default none
+        borderRadius: 15,
         borderColor: '#777',
         padding: 8,
-        margin: 10,
-        width: 200,
+        margin: 6,
     },
     boxWrap: {
+        marginBottom: 20,
         borderRadius: 15,
         backgroundColor: 'rgba(4, 165, 255, 0.45)',
-    }
+    },
+    modalToggle: {
+        borderWidth: 1,
+        borderColor: '#f2f2f2',
+        borderRadius: 10,
+        padding: 2,
+        alignSelf: 'center',
+    },
 });
