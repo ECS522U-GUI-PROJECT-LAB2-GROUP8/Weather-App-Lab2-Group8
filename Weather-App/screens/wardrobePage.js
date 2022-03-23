@@ -8,6 +8,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { set } from 'react-native-reanimated';
 
 import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const ClothSchema = yup.object({
+    title: yup.string().required(), //If title not string, then fail, required means something must be filled. min(val) for string length
+    //category: yup.string().required(),
+    //image: yup.object().required('Photo is required'), // Can also check fileName, path, type, etc for shape of object
+    // test() takes function, can make it return true or false to see if valid, 
+        //first arg is 'name for test', second arg is string of 'error printout', third arg is function (which could take value)
+}) // yup.object().shaoe({})?
 
 export default function WardrobePage({navigation}) {    
     
@@ -16,7 +25,6 @@ export default function WardrobePage({navigation}) {
     const [clothes, setClothes] = useState([
         {name:'Blue tshirt', category: '', image: 'Insert image', key: '1'}
     ]);
-
     const addCloth = (cloth) => {
         cloth.key = Math.random().toString();// install uuid or something better
         setClothes((currentClothes) => {
@@ -43,46 +51,48 @@ export default function WardrobePage({navigation}) {
                         </View>
                         <Formik
                             initialValues={{name:'', category: '', image: ''}}
-                            onSubmit={(values) => {
-                            addCloth(values)
+                            //validationSchema={ClothSchema}
+                            onSubmit={(values, actions) => {
+                                actions.resetForm();
+                                addCloth(values)
                         }}>
-                        {(formikProps) => (
-                            <View style={{flex: 1}}>
-                                <View style={globalStyles.boxWrap}>
-                                    <TextInput
-                                        style = {globalStyles.input}
-                                        placeholder='Enter name...'
-                                        onChangeText={formikProps.handleChange('name')}
-                                        value={formikProps.values.name}
-                                    />
-                                </View>
+                            {(formikProps) => (
+                                <View style={{flex: 1}}>
+                                    <View style={globalStyles.boxWrap}>
+                                        <TextInput
+                                            style = {globalStyles.input}
+                                            placeholder='Enter name...'
+                                            onChangeText={formikProps.handleChange('name')}
+                                            value={formikProps.values.name}
+                                        />
+                                    </View>
 
-                                {/* Dropdown box TO BE IMPLEMENTED*/}
-                                <View style={[globalStyles.boxWrap, {padding: 10, flexDirection:'row'}]}>
-                                    <MaterialIcons
-                                        name='arrow-drop-down'
-                                        size={24}
-                                        onPress={() => {}}
-                                    />
-                                    <Text style={{...globalStyles.text, left:10}}>Select Category</Text>
-                                </View>
-                            
-                                {/* Upload image*/}
-                                <View style={[globalStyles.boxWrap, {width: 312, height: 259, flex: 1}]}>
-                                    <TouchableOpacity 
-                                        style={{alignItems: 'center', justifyContent:'center', flex: 1}}
-                                        onPress={{}}>
-                                        <Text style={{...globalStyles.text}}>Upload image</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                    {/* Dropdown box TO BE IMPLEMENTED*/}
+                                    <View style={[globalStyles.boxWrap, {padding: 10, flexDirection:'row'}]}>
+                                        <MaterialIcons
+                                            name='arrow-drop-down'
+                                            size={24}
+                                            onPress={() => {}}
+                                        />
+                                        <Text style={{...globalStyles.text, left:10}}>Select Category</Text>
+                                    </View>
+                                
+                                    {/* Upload image*/}
+                                    <View style={[globalStyles.boxWrap, {width: 312, height: 259, flex: 1}]}>
+                                        <TouchableOpacity 
+                                            style={{alignItems: 'center', justifyContent:'center', flex: 1}}
+                                            onPress={{}}>
+                                            <Text style={{...globalStyles.text}}>Upload image</Text>
+                                        </TouchableOpacity>
+                                    </View>
 
-                                {/* Add button*/}
-                                <View style={{marginBottom: 15}}>
-                                    <Button title = 'Add' onPress={formikProps.handleSubmit}/>
+                                    {/* Add button*/}
+                                    <View style={{marginBottom: 15}}>
+                                        <Button title = 'Add' onPress={formikProps.handleSubmit}/>
+                                    </View>
                                 </View>
-                            </View>
-                        )}
-            </Formik>
+                            )}
+                        </Formik>
                     </View>
                 </LinearGradient>
             </Modal>
