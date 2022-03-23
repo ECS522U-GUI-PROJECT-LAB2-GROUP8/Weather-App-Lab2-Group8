@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, Component } from 'react';
 import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,15 +11,13 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import * as ImagePicker from 'expo-image-picker';
-
+import { Picker } from '@react-native-picker/picker';
 
 const [SUPPORTED_FORMATS] = ["image/jpg", "image/jpeg", "image/png"];
 const ClothSchema = yup.object().shape({
     name: yup.string().required(), //If title not string, then fail, required means something must be filled. min(val) for string length
     category: yup.string().required(),
-    image: yup.mixed().required(),
-    //image: yup.object().required('Photo is required'), // Can also check fileName, path, type, etc for shape of object
-    
+    image: yup.mixed().required(),    
     // test() takes function, can make it return true or false to see if valid, 
         //first arg is 'name for test', second arg is string of 'error printout', third arg is function (which could take value)
 }) // yup.object().shaoe({})?
@@ -39,10 +37,29 @@ export default function WardrobePage({navigation}) {
         setModalOpen(false);
     }
 
-    // Image pick
-    //const [selectedImage, setSelectedImage] = React.useState(null);
-    let _pickImage = async(handleChange) => {
+    // Category pick
+    const [pickerFocused, setPickerFocused] = useState(false) // To give placeholder
+    const categories = [
+        // Top
+        {name: "T-shirt", id: 1},
+        {name: "Coat", id: 2},
+        {name: "Hoodie", id: 3},
+        {name: "Jacket", id: 4},
+        {name: "T-shirt", id: 5},
+        {name: "Coat", id: 6},
+        {name: "Hoodie", id: 7},
+        {name: "Jacket", id: 8},
+        
+        // Bottom
+        {name: "Trousers", id: 9},
+        {name: "Jeans", id: 10},
+        {name: "Leggings", id: 11},
+        {name: "Skirt", id: 12},
+    ]
 
+    // Image pick
+    let _pickImage = async(handleChange) => {
+        // Request device to allow access and await response
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissionResult.granted === false) {
           alert("Permission to access camera roll is required!");
@@ -60,7 +77,7 @@ export default function WardrobePage({navigation}) {
         }
     }
 
-    // To resolve virtualised list issue, 2 scroll components clash: ScrollView and FlatList
+    // [To resolve]: virtualised list issue, 2 scroll components clash: ScrollView and FlatList
 
     return (
         <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
@@ -102,15 +119,29 @@ export default function WardrobePage({navigation}) {
                                     {/* Outputs on the RHS of the && if both are true */}
                                     
                                     {/* Dropdown box TO BE IMPLEMENTED*/}
-                                    <View style={[globalStyles.boxWrap, {padding: 10, flexDirection:'row'}]}>
-                                        <MaterialIcons
-                                            name='arrow-drop-down'
-                                            size={24}
-                                            onPress={() => {}}
-                                            onChange={formikProps.handleChange('category')}
-                                            value={formikProps.values.category}
-                                        />
-                                        <Text style={{...globalStyles.text, left:10}}>Select Category</Text>
+                                    <View style={[globalStyles.boxWrap, {padding: 10}]}>
+                                        <Picker
+                                            mode='dropdown'
+                                            style={globalStyles.text}
+                                            dropdownIconColor={'white'}
+
+                                            selectedValue={formikProps.values.category}
+                                            onValueChange={formikProps.handleChange('category')}
+
+                                            onFocus={() => setPickerFocused(true)}
+                                            onBlur={() => setPickerFocused(false)}
+                                        >
+                                            <Picker.Item value="" label="Select Category" enabled={!pickerFocused}/>
+                                            {categories.map((item) => {
+                                                return (
+                                                    <Picker.Item
+                                                        label={item.name.toString()}
+                                                        value={item.name.toString()}
+                                                        key={item.id.toString()}
+                                                    />
+                                                )
+                                            })}
+                                        </Picker>
                                     </View>
                                     <Text style={globalStyles.errorText}>{ formikProps.touched.category && formikProps.errors.category }</Text>
                                 
@@ -175,8 +206,6 @@ export default function WardrobePage({navigation}) {
 
                 </View>
             </ScrollView>
-        </LinearGradient>
-
-        
+        </LinearGradient>        
     );
   }
