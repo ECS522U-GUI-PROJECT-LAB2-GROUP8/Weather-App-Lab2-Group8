@@ -199,6 +199,12 @@ const HomePage = () => {
 
     
     var timeHour = new Date().getHours()
+    function timeHourBefore9 () {
+        if (timeHour < 10) {
+            return "0" + timeHour 
+        }
+        else { return timeHour }
+    }
     var timeMin = new Date().getMinutes()
 
     /*OUTPUT============================================================================================================================ */
@@ -215,7 +221,7 @@ const HomePage = () => {
                     <View style={locationAndTime.container}>
                         <Text style={{color: 'white', fontSize: 20}}>{location}</Text>
                         <Text style={{color: 'white', marginTop: 10}}>Feels like {feelsLike}°C</Text>
-                        <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHour}:{timeMin}</Text>
+                        <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHourBefore9()}:{timeMin}</Text>
                     </View>
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
