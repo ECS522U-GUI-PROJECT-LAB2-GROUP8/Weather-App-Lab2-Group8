@@ -45,4 +45,14 @@ export const globalStyles = StyleSheet.create({
         padding: 2,
         alignSelf: 'center',
     },
+    thumbnail: {
+        height: 370,
+        width: 500,
+        resizeMode: "contain", //contain, cover
+    },
+    errorText: {
+        color: 'crimson',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    }
 });
