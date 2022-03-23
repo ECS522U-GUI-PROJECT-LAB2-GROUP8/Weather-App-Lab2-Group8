@@ -21,6 +21,10 @@ export const globalStyles = StyleSheet.create({
         fontWeight: '400',
         color: '#FFFFFF', 
     },
+    subTitle: {
+        fontSize: 20,
+        fontWeight: '400',
+    },
     text: {
         //fontFamily: 'RobotoMono-Regular',
         fontSize: 16,
@@ -34,7 +38,6 @@ export const globalStyles = StyleSheet.create({
         margin: 6,
     },
     boxWrap: {
-        marginBottom: 20,
         borderRadius: 15,
         backgroundColor: 'rgba(4, 165, 255, 0.45)',
     },
@@ -46,9 +49,28 @@ export const globalStyles = StyleSheet.create({
         alignSelf: 'center',
     },
     thumbnail: {
-        height: 370,
-        width: 500,
+        height: undefined,
+        width: '95%',
+        aspectRatio: 1,
         resizeMode: "contain", //contain, cover
+    },
+    column: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginRight: 20,
+        paddingHorizontal: 10,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'silver',
+    },
+    image: {
+        flex: 1,
+        aspectRatio: 0.70,
+        //height: undefined,
+        //width: '100%',
+        resizeMode: "contain", //contain, cover
+        //borderRadius: 40,
     },
     errorText: {
         color: 'crimson',
