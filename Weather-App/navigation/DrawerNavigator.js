@@ -18,9 +18,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // For navigation bar
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-  // import { ScreenContainer } from 'react-native-screens';
-  // import { Button } from 'react-native-web';
-  // import { TabRouter } from 'react-navigation';
 
 const HomeStack = createStackNavigator();
 const SuggestionStack = createStackNavigator();
@@ -111,7 +108,7 @@ export function MyDrawer() {
 
 /*CSS Styling*/
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({    //NAV BAR STYLING
   container: {
     flex: 1,
     backgroundColor: 'rgba(4, 165, 255, 0.42)'

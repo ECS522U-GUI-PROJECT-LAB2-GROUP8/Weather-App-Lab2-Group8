@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, Touchab
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../styles/global';
 
-export default function addWardrobePage() {
+export default function AddWardrobePage() {
     
     const [cloth, setCloth] = useState({name: 'Yellow T-shirt', category: 'top'});
 

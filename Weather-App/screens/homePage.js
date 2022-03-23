@@ -2,6 +2,7 @@ import  React, { useState, useEffect} from 'react';
 import { View, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 /* NOTE TO READ 
 NAVIGATION GUIDE:
@@ -15,7 +16,7 @@ NAVIGATION GUIDE:
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
 
     //Todays temp Hook
     const [temp, setTemp] = useState([]);
@@ -32,6 +33,7 @@ const HomePage = () => {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
                 console.log(data)                             //Comment out once done
                 console.log("===================================================================================================================================")
+
                 //Temperature right now 
                 var tempValue = data['main']['temp'];
                 setTemp(Math.round(tempValue));
@@ -93,6 +95,9 @@ const HomePage = () => {
     const [humidity, setHumidity] = useState('')
     const [UV, setUV] = useState('')
     const [wind, setWind] = useState('')
+
+    /*Gradient state */
+    const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
 
     //Fetching forecase data (7-Day)
     const fetchForecastData = (latitude, longitude) => {
@@ -175,6 +180,17 @@ const HomePage = () => {
             setUV(UVData);
             setWind(WindData);
 
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours(); console.log(sunRiseHour)          //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours(); console.log(sunSetHour)           //Get sunset hour
+            
+                
+            function gradientChange() {
+                if (currentTimeHour >= sunSetHour) {
+                    setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+            }
+            gradientChange()
+                
             //console.log(data)
         })
     }
@@ -195,7 +211,8 @@ const HomePage = () => {
     useEffect(() => {loadForecast()}, [])
 
     //Colour Gradients
-    const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
+    const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]    //Day/sunny gradient
+    const colourGradientNight= ["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"]
 
     
     var timeHour = new Date().getHours()
@@ -207,9 +224,27 @@ const HomePage = () => {
     }
     var timeMin = new Date().getMinutes()
 
+    //Navigation onPress handler
+    const pressHandler = () => {
+        navigation.navigate('Suggestion');
+    }
+
+    // //Gradient change
+    // const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours(); console.log(sunRiseHour)          //Get sunrise hour
+    // const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours(); console.log(sunSetHour)           //Get sunset hour
+    const currentTimeHour = new Date().getUTCHours(); console.log(currentTimeHour)              //Current time hour
+    
+    // function gradientChange() {
+    //     if (currentTimeHour >= sunSetHour) {
+    //         return ["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"]
+    //     } else { return  ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"] }
+    // }
+                
+
+
     /*OUTPUT============================================================================================================================ */
     return (
-        <LinearGradient style={{flex: 1}} colors={colourGradientDay}>
+        <LinearGradient style={{flex: 1}} colors={grad}>
                 <ScrollView>
                     <View style= {todaysWeather.container}>
                         <Text style={{fontSize: 50, textAlign: 'center', color: 'white' }}>{temp}°C</Text>
@@ -222,6 +257,11 @@ const HomePage = () => {
                         <Text style={{color: 'white', fontSize: 20}}>{location}</Text>
                         <Text style={{color: 'white', marginTop: 10}}>Feels like {feelsLike}°C</Text>
                         <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHourBefore9()}:{timeMin}</Text>
+                    </View>
+                    <View style={recommendationSection.container}>
+                        <TouchableOpacity onPress={pressHandler}>
+                            <Text style={{color: 'white', textAlign: 'center'}}>What should I wear today</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
@@ -312,6 +352,21 @@ const locationAndTime = StyleSheet.create({
     }
 })
 
+const recommendationSection = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: ' rgba(0, 0, 0, 0.18)',
+        width: '84%', 
+        height: 40,
+        marginTop: 30 ,
+        marginRight: '8%',
+        marginLeft: '8%',
+        borderRadius: 20,
+        padding: 1,
+    }
+})
+
 const weekForeCastContainer = StyleSheet.create({
     container: {
         justifyContent: 'center',
@@ -319,8 +374,8 @@ const weekForeCastContainer = StyleSheet.create({
         textAlign: 'center', 
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         width: '84%', 
-        minHeight: 130,
-        marginTop: 100 ,
+        height: 130,
+        marginTop: 20 ,
         marginRight: '8%',
         marginLeft: '8%',
         borderRadius: 20,
@@ -358,7 +413,7 @@ const extraSection = StyleSheet.create({
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         width: '84%', 
         minHeight: 150,
-        marginTop: 40 ,
+        marginTop: 30 ,
         marginRight: '8%',
         marginLeft: '8%',
         borderRadius: 20,
