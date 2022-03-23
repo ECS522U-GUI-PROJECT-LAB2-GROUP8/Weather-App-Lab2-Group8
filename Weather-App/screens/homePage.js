@@ -23,6 +23,8 @@ const HomePage = () => {
     const [icon, setIcon] = useState('');
 
     //Location and time
+    const [location, setLocation] = useState('')
+    const [feelsLike, setFeelsLike] = useState('')
 
     //Fetch data from API
     const fetchDataFromApi = (latitude, longitude) => {
@@ -50,6 +52,10 @@ const HomePage = () => {
                 } else if ( weatherID > 800) {                          //Cloudy: 8xx
                     setIcon('https://i.imgur.com/JdvzIwe.png'); //console.log("Drizzle/Rain")
                 }
+
+                //Top section
+                setLocation(data['name'])
+                setFeelsLike(Math.round(data['main']['feels_like']))
          })
         }
       }
@@ -191,6 +197,10 @@ const HomePage = () => {
     //Colour Gradients
     const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
 
+    
+    var timeHour = new Date().getHours()
+    var timeMin = new Date().getMinutes()
+
     /*OUTPUT============================================================================================================================ */
     return (
         <LinearGradient style={{flex: 1}} colors={colourGradientDay}>
@@ -203,7 +213,9 @@ const HomePage = () => {
                         </View>
                     </View>
                     <View style={locationAndTime.container}>
-                        <Text>Location</Text>
+                        <Text style={{color: 'white', fontSize: 20}}>{location}</Text>
+                        <Text style={{color: 'white', marginTop: 10}}>Feels like {feelsLike}°C</Text>
+                        <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHour}:{timeMin}</Text>
                     </View>
                     <View style={weekForeCastContainer.container}>
                         <View style={individualDay.container}>
