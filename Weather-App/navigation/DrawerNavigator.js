@@ -6,7 +6,6 @@ import { StyleSheet, View } from 'react-native';
 
 /*Pages*/
 import homePage from '../screens/homePage';
-import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
 // import settingsPage from '../screens/settingsPage';
 // import signUp from '../screens/signUp';
@@ -61,14 +60,6 @@ const WardrobePageScreen = () => (
   </WardrobeStack.Navigator>
 )
 
-const LoginPageScreen = () => (
-  <LoginStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <LoginStack.Screen name="Login" component={loginPage} />
-  </LoginStack.Navigator>
-)
-
 /* Navigation Drawer BAR */
 
 const Drawer = createDrawerNavigator();
@@ -97,11 +88,6 @@ export function MyDrawer() {
         name="WardrobeScreen"
         component={WardrobePageScreen}
         options={{ drawerLabel: 'Wardrobe' }}
-      />
-      <Drawer.Screen
-        name="LoginScreen"
-        component={LoginPageScreen}
-        options={{ drawerLabel: 'Login'}} 
       />
     </Drawer.Navigator>
   );
