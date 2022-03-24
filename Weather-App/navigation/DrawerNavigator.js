@@ -5,7 +5,6 @@ import { StyleSheet, View } from 'react-native';
 
 /*Pages*/
 import homePage from '../screens/homePage';
-import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
 import wardrobePage from '../screens/wardrobePage';
 import daysAhead from '../screens/daysAhead';
@@ -54,14 +53,6 @@ const WardrobePageScreen = () => (
   }}>
     <WardrobeStack.Screen name="Wardrobe" component={wardrobePage} />
   </WardrobeStack.Navigator>
-)
-
-const LoginPageScreen = () => (
-  <LoginStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <LoginStack.Screen name="Login" component={loginPage} />
-  </LoginStack.Navigator>
 )
 
 /* Navigation Drawer BAR */
