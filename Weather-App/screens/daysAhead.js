@@ -8,6 +8,8 @@ const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 export default function DaysAhead() {
 
+    /*Gradient state */
+    const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
 
     //Day
     const [day0, setDay0] = useState(' '); const [day1, setDay1] = useState(' '); const [day2, setDay2] = useState(' ')
@@ -175,6 +177,20 @@ export default function DaysAhead() {
                     setDayIcon6(iconStatus(data['daily']['6']['weather']['0']['id']))
                 }
                 iconStates()
+
+                const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();           //Get sunrise hour
+                const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();            //Get sunset hour
+                
+                
+                //Change background colour depending on day/night
+                const currentTimeHour = new Date().getUTCHours();         //Current time hour
+
+                function gradientChange() {
+                    if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
+                        setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                    } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+                }
+                gradientChange()
             })
     }
 
@@ -193,7 +209,7 @@ export default function DaysAhead() {
     useEffect(() => {loadForecast()}, [])
 
     return(
-        <LinearGradient style={{flex:1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]} >
+        <LinearGradient style={{flex:1}} colors={grad} >
             <ScrollView>
                 <View style={{flexDirection: 'column', marginTop: 50}}>
                     <View style= {individualSection.container}>
