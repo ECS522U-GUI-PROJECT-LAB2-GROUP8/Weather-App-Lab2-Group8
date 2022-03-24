@@ -21,11 +21,11 @@ const HomePage = ({navigation}) => {
     //Todays temp Hook
     const [temp, setTemp] = useState([]);
     const [weatherType, setWeatherType] = useState();
-    const [icon, setIcon] = useState('');
+    const [icon, setIcon] = useState(' ');
 
     //Location and time
-    const [location, setLocation] = useState('')
-    const [feelsLike, setFeelsLike] = useState('')
+    const [location, setLocation] = useState(' ')
+    const [feelsLike, setFeelsLike] = useState(' ')
 
     //Fetch data from API
     const fetchDataFromApi = (latitude, longitude) => {
@@ -64,37 +64,37 @@ const HomePage = ({navigation}) => {
     /* 7 DAY FORECAST ================================================================================================================ */
     
     /**Day useStates */
-    const [day0, setDay0] = useState('')
-    const [day1, setDay1] = useState('')
-    const [day2, setDay2] = useState('')
-    const [day3, setDay3] = useState('')
-    const [day4, setDay4] = useState('')
-    const [day5, setDay5] = useState('')
-    const [day6, setDay6] = useState('')
+    const [day0, setDay0] = useState(' ')
+    const [day1, setDay1] = useState(' ')
+    const [day2, setDay2] = useState(' ')
+    const [day3, setDay3] = useState(' ')
+    const [day4, setDay4] = useState(' ')
+    const [day5, setDay5] = useState(' ')
+    const [day6, setDay6] = useState(' ')
 
     //Icon change useStates
-    const [dayIcon0, setDayIcon0] = useState('')
-    const [dayIcon1, setDayIcon1] = useState('')
-    const [dayIcon2, setDayIcon2] = useState('')
-    const [dayIcon3, setDayIcon3] = useState('')
-    const [dayIcon4, setDayIcon4] = useState('')
-    const [dayIcon5, setDayIcon5] = useState('')
-    const [dayIcon6, setDayIcon6] = useState('')
+    const [dayIcon0, setDayIcon0] = useState(' ')
+    const [dayIcon1, setDayIcon1] = useState(' ')
+    const [dayIcon2, setDayIcon2] = useState(' ')
+    const [dayIcon3, setDayIcon3] = useState(' ')
+    const [dayIcon4, setDayIcon4] = useState(' ')
+    const [dayIcon5, setDayIcon5] = useState(' ')
+    const [dayIcon6, setDayIcon6] = useState(' ')
 
     /*Temp Usestates */ /*[MAX TEMP]*/
-    const [temp0, setTemp0] = useState('')
-    const [temp1, setTemp1] = useState('')
-    const [temp2, setTemp2] = useState('')
-    const [temp3, setTemp3] = useState('')
-    const [temp4, setTemp4] = useState('')
-    const [temp5, setTemp5] = useState('')
-    const [temp6, setTemp6] = useState('')
+    const [temp0, setTemp0] = useState(' ')
+    const [temp1, setTemp1] = useState(' ')
+    const [temp2, setTemp2] = useState(' ')
+    const [temp3, setTemp3] = useState(' ')
+    const [temp4, setTemp4] = useState(' ')
+    const [temp5, setTemp5] = useState(' ')
+    const [temp6, setTemp6] = useState(' ')
 
     /*Humid, UV, and wind usestates */
 
-    const [humidity, setHumidity] = useState('')
-    const [UV, setUV] = useState('')
-    const [wind, setWind] = useState('')
+    const [humidity, setHumidity] = useState(' ')
+    const [UV, setUV] = useState(' ')
+    const [wind, setWind] = useState(' ')
 
     /*Gradient state */
     const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
@@ -234,7 +234,7 @@ const HomePage = ({navigation}) => {
 
     //Navigation onPress handler
     const pressHandler = () => {
-        navigation.navigate('Suggestion');
+        navigation.navigate('SuggestionsScreen');
     }
 
     const currentTimeHour = new Date().getUTCHours();         //Current time hour
