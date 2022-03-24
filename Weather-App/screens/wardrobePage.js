@@ -24,7 +24,8 @@ const ClothSchema = yup.object().shape({
 }) 
 
 export default function WardrobePage({navigation}) {    
-    
+    console.log(navigation.extraData);
+
     // Redux
     const {clothesX} = useSelector(state=>state.clothReducer);
     const dispatch = useDispatch();

@@ -6,8 +6,8 @@ import { StyleSheet, View, Image } from 'react-native';
 /*Pages*/
 import homePage from '../screens/homePage';
 import RecommendationPage from '../screens/recommendationPage';
-import wardrobePage from '../screens/wardrobePage';
-import daysAhead from '../screens/daysAhead';
+import WardrobePage from '../screens/wardrobePage';
+import DaysAhead from '../screens/daysAhead';
 import exampleImage from '../assets/tshirt.png';
 
 
@@ -17,12 +17,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 // For navigation bar
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 
-// Context
 
 /* Navigation Drawer BAR */
 const Drawer = createDrawerNavigator();
 
 export function MyDrawer() {
+  
+  // Values
+  const [someVal, setSomeVal] = useState('Some words');
 
   return (
         <Drawer.Navigator 
@@ -41,14 +43,16 @@ export function MyDrawer() {
         />
         <Drawer.Screen
           name="DaysAheadScreen"
-          component={daysAhead}
           options={{ drawerLabel: 'Days Ahead' }}
-        />
+        >
+          {props => <DaysAhead {...props} data={"someVal"}/>}
+        </Drawer.Screen>
         <Drawer.Screen
           name="WardrobeScreen"
-          component={wardrobePage}
           options={{ drawerLabel: 'Wardrobe' }}
-        />
+        >
+          {props => <WardrobePage {...props} extraData={"someVal"}/>}
+        </Drawer.Screen>
       </Drawer.Navigator>
     
   );
