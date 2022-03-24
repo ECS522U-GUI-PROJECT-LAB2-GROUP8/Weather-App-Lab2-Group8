@@ -1,18 +1,21 @@
-import React, { useState, useLayoutEffect, Component } from 'react';
-import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image, SafeAreaView, createContext, useContext } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../styles/global';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { set } from 'react-native-reanimated';
 
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
+import exampleImage from '../assets/tshirt.png';
 
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { setClothesX } from '../redux/actions/actions';
 
 const ClothSchema = yup.object().shape({
     name: yup.string().required(), 
@@ -22,17 +25,32 @@ const ClothSchema = yup.object().shape({
 
 export default function WardrobePage({navigation}) {    
     
+    // Redux
+    const {clothesX} = useSelector(state=>state.clothReducer);
+    const dispatch = useDispatch();
+
     const [modalOpen, setModalOpen] = useState(false);
     
-    const [clothes, setClothes] = useState([
-        //{name:'Blue tshirt', category: '', image: {}, key: '1'}
-    ]);
+    const [clothes, setClothes] = useState(
+        [ 
+        {name:'Blue shirt', category: 'Shirt', image: Image.resolveAssetSource(exampleImage).uri, key: '1'},
+        ]
+    );
     const addCloth = (cloth) => {
         cloth.key = Math.random().toString();// install uuid or something better
+        
         setClothes((currentClothes) => {
             return [cloth, ...currentClothes];
         });
+        // redux
+        //dispatch(setClothesX(cloth));
+        console.log("Test 2, inserting in setClothesX",)
+
         setModalOpen(false);
+    }
+
+    function getClothes(){
+        return clothes;
     }
 
     // Category pick
@@ -92,7 +110,6 @@ export default function WardrobePage({navigation}) {
             //allowsEditing: true,
             //aspect: [4, 3]
         })
-        console.log(result) // [REMOVE]
         //setSelectedImage({ localUri: pickerResult.uri });
         if (!result.cancelled) {
             handleChange(result.uri)
@@ -122,7 +139,6 @@ export default function WardrobePage({navigation}) {
                             initialValues={{name:'', category: '', image: null}}
                             validationSchema={ClothSchema} // finish after doing drop down category
                             onSubmit={(values, actions) => {
-
                                 actions.resetForm();
                                 addCloth(values)
                         }}>
@@ -236,6 +252,8 @@ export default function WardrobePage({navigation}) {
                                     } 
                                 }}/>
                         </SafeAreaView>
+                    </View>
+                    <View>
                     </View>
 
                 </View>
