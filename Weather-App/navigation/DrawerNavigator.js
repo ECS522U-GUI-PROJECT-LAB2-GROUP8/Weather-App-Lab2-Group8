@@ -8,18 +8,16 @@ import { StyleSheet, View } from 'react-native';
 import homePage from '../screens/homePage';
 import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
-import settingsPage from '../screens/settingsPage';
-import signUp from '../screens/signUp';
+// import settingsPage from '../screens/settingsPage';
+// import signUp from '../screens/signUp';
 import wardrobePage from '../screens/wardrobePage';
+import daysAhead from '../screens/daysAhead';
 
 /*Navigation Settings*/
 import { createStackNavigator } from '@react-navigation/stack';
 
 // For navigation bar
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-  // import { ScreenContainer } from 'react-native-screens';
-  // import { Button } from 'react-native-web';
-  // import { TabRouter } from 'react-navigation';
 
 const HomeStack = createStackNavigator();
 const SuggestionStack = createStackNavigator();
@@ -49,7 +47,7 @@ const DaysAheadPageScreen = () => (
   <DaysAheadStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <DaysAheadStack.Screen name="Days Ahead" component={homePage} />
+    <DaysAheadStack.Screen name="Days Ahead" component={daysAhead} />
   </DaysAheadStack.Navigator>
 )
 
@@ -109,7 +107,7 @@ export function MyDrawer() {
 
 /*CSS Styling*/
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({    //NAV BAR STYLING
   container: {
     flex: 1,
     backgroundColor: 'rgba(4, 165, 255, 0.42)'
