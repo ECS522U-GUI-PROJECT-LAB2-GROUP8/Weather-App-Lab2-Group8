@@ -8,10 +8,11 @@ import { StyleSheet, View } from 'react-native';
 import homePage from '../screens/homePage';
 import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
-import settingsPage from '../screens/settingsPage';
-import signUp from '../screens/signUp';
+// import settingsPage from '../screens/settingsPage';
+// import signUp from '../screens/signUp';
 import wardrobePage from '../screens/wardrobePage';
 import addToWardrobePage from '../screens/addToWardrobePage';
+import daysAhead from '../screens/daysAhead';
 
 /*Navigation Settings*/
 import { createStackNavigator } from '@react-navigation/stack';
@@ -47,7 +48,7 @@ const DaysAheadPageScreen = () => (
   <DaysAheadStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <DaysAheadStack.Screen name="Days Ahead" component={homePage} />
+    <DaysAheadStack.Screen name="Days Ahead" component={daysAhead} />
   </DaysAheadStack.Navigator>
 )
 
