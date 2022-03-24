@@ -180,8 +180,8 @@ const HomePage = ({navigation}) => {
             setUV(UVData);
             setWind(WindData);
 
-            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours(); console.log(sunRiseHour)          //Get sunrise hour
-            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours(); console.log(sunSetHour)           //Get sunset hour
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();          //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
             
             
             //Change background colour depending on day/night
@@ -192,8 +192,6 @@ const HomePage = ({navigation}) => {
                 } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
             }
             gradientChange()
-                
-            //console.log(data)
         })
     }
   
