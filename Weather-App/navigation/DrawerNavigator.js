@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
-import {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 
 
@@ -8,8 +7,6 @@ import { StyleSheet, View } from 'react-native';
 import homePage from '../screens/homePage';
 import loginPage from '../screens/loginPage';
 import recommendationPage from '../screens/recommendationPage';
-// import settingsPage from '../screens/settingsPage';
-// import signUp from '../screens/signUp';
 import wardrobePage from '../screens/wardrobePage';
 import daysAhead from '../screens/daysAhead';
 
@@ -95,11 +92,6 @@ export function MyDrawer() {
         name="WardrobeScreen"
         component={WardrobePageScreen}
         options={{ drawerLabel: 'Wardrobe' }}
-      />
-      <Drawer.Screen
-        name="LoginScreen"
-        component={LoginPageScreen}
-        options={{ drawerLabel: 'Login'}} 
       />
     </Drawer.Navigator>
   );
