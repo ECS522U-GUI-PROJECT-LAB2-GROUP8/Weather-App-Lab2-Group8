@@ -31,8 +31,6 @@ const HomePage = ({navigation}) => {
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
-                //console.log(data)                             //Comment out once done
-                console.log("===================================================================================================================================")
 
                 //Temperature right now 
                 var tempValue = data['main']['temp'];
@@ -185,7 +183,7 @@ const HomePage = ({navigation}) => {
             
             
             //Change background colour depending on day/night
-
+            const currentTimeHour = new Date().getUTCHours();         //Current time hour
             function gradientChange() {
                 if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
                     setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
@@ -210,11 +208,6 @@ const HomePage = ({navigation}) => {
 
     useEffect(() => {loadForecast()}, [])
 
-    //Colour Gradients
-    const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]    //Day/sunny gradient
-    const colourGradientNight= ["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"]
-
-    
     var timeHour = new Date().getHours()
     function timeHourBefore9 () {
         if (timeHour < 10) {
@@ -234,10 +227,6 @@ const HomePage = ({navigation}) => {
     const pressHandler = () => {
         navigation.navigate('SuggestionsScreen');
     }
-
-    const currentTimeHour = new Date().getUTCHours();         //Current time hour
-    
-
 
     /*OUTPUT============================================================================================================================ */
     return (
