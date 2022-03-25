@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image, SafeAreaView, createContext, useContext } from 'react-native';
-
-import { LinearGradient } from 'expo-linear-gradient';
+import {View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image, SafeAreaView } from 'react-native';
 import { globalStyles } from '../styles/global';
 
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { Formik } from 'formik';
@@ -11,12 +10,14 @@ import * as yup from 'yup';
 
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
-import exampleImage from '../assets/tshirt.png';
 
-// Redux
+import { v4 as uuid } from 'uuid';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { setClothesX } from '../redux/actions/actions';
+import { addClothes } from '../redux/actions/actions';
 
+
+// Schema to validate form for "Add to wardrobe" page
 const ClothSchema = yup.object().shape({
     name: yup.string().required(), 
     category: yup.string().required(),
@@ -24,43 +25,20 @@ const ClothSchema = yup.object().shape({
 }) 
 
 export default function WardrobePage({navigation}) {    
-    console.log(navigation.extraData);
-
-    // Redux
-    const {clothesX} = useSelector(state=>state.clothReducer);
-    const dispatch = useDispatch();
-
     const [modalOpen, setModalOpen] = useState(false);
     
-    const [clothes, setClothes] = useState(
-        [ 
-        {name:'Blue shirt', category: 'Shirt', image: Image.resolveAssetSource(exampleImage).uri, key: '1'},
-        ]
-    );
-    const addCloth = (cloth) => {
-        cloth.key = Math.random().toString();// install uuid or something better
-        
-        setClothes((currentClothes) => {
-            return [cloth, ...currentClothes];
-        });
-        // redux
-        //dispatch(setClothesX(cloth));
-        console.log("Test 2, inserting in setClothesX",)
+    const wardrobe = useSelector( state => state.clothReducer.wardrobe);
+    const dispatch = useDispatch(); // Used to call actions from redux
 
+    const addCloth = (cloth) => {
+        cloth.key = uuid();
+        dispatch(addClothes(cloth)); // Redux function to update state for clothes
         setModalOpen(false);
     }
 
-    function getClothes(){
-        return clothes;
-    }
-
     // Category pick
-    const [pickerFocused, setPickerFocused] = useState(false) // To give placeholder
+    const [pickerFocused, setPickerFocused] = useState(false) // Reset's placeholder for 'Select category'
     const categories = [
-        // Headwear
-
-        // Footwear
-
         // Top
         {name: "Tops & T-shirt", id: 1},
         {name: "Hoodies & Sweatshirts", id: 2},
@@ -68,7 +46,6 @@ export default function WardrobePage({navigation}) {
         {name: "Shirt", id: 4},
         {name: "Jumpers", id: 5},
         {name: "Coat", id: 6},
-
         {name: "Dresses", id: 7},
         {name: "Blouses", id: 8},
         
@@ -79,10 +56,9 @@ export default function WardrobePage({navigation}) {
         {name: "Pants", id: 12},
         {name: "Skirts", id: 12}
     ]
-    const tops = ["Tops & T-shirt", "Hoodies & Sweatshirts", "Jackets & Gilets", "Shirt", "Jumpers", "Coat", "Dresses", "Blouses"]
-    const bottoms = ["Trousers & Tights", "Jeans", "Shorts", "Pants", "Skirts"]
 
     function RenderTop(item) {
+        const tops = ["Tops & T-shirt", "Hoodies & Sweatshirts", "Jackets & Gilets", "Shirt", "Jumpers", "Coat", "Dresses", "Blouses"]
         if(tops.includes(item.category))
         {
             return true;
@@ -91,6 +67,7 @@ export default function WardrobePage({navigation}) {
     }
 
     function RenderBottom(item) {
+        const bottoms = ["Trousers & Tights", "Jeans", "Shorts", "Pants", "Skirts"]
         if(bottoms.includes(item.category))
         {
             return true;
@@ -98,7 +75,7 @@ export default function WardrobePage({navigation}) {
         return false;
     }
 
-    // Image pick
+    // Image pick: function to allow user to pick image from their phone device
     let _pickImage = async(handleChange) => {
         // Request device to allow access and await response
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -108,26 +85,25 @@ export default function WardrobePage({navigation}) {
         }
 
         let result = await ImagePicker.launchImageLibraryAsync({
-            //allowsEditing: true,
-            //aspect: [4, 3]
         })
-        //setSelectedImage({ localUri: pickerResult.uri });
+
         if (!result.cancelled) {
             handleChange(result.uri)
         }
     }
 
-    // [To resolve]: virtualised list issue, 2 scroll components clash: ScrollView and FlatList
-
+    // Main render for page
     return (
         <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
             
+            {/* Modal to hold "Add to wardrobe" page, a form to fill in item cloth they have in their possession */}
             <Modal visible={modalOpen} animationType='slide'>
                 <ScrollView>
                 <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
                     <View style={globalStyles.modalContent}>
                         
-                        <View style={[globalStyles.header, {marginBottom: 30, flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}]}>
+                        {/* Title with close button*/}
+                        <View style={globalStyles.modalHeader}>
                             <Text style={globalStyles.titleText}>Add to Wardrobe</Text>
                             <MaterialIcons
                                 name='close'
@@ -136,15 +112,19 @@ export default function WardrobePage({navigation}) {
                                 onPress={() => setModalOpen(false)}
                             />
                         </View>
+
+                        {/* Main form submission: Enter name, choose category, upload image */}
                         <Formik
                             initialValues={{name:'', category: '', image: null}}
-                            validationSchema={ClothSchema} // finish after doing drop down category
+                            validationSchema={ClothSchema}
                             onSubmit={(values, actions) => {
-                                actions.resetForm();
-                                addCloth(values)
+                                actions.resetForm(); // Empties out form for next submission
+                                addCloth(values) // Adds cloth to wardrobe
                         }}>
                             {(formikProps) => (
                                 <View style={{flex: 1}}>
+                                    
+                                    {/* Enter name field */}
                                     <View style={globalStyles.boxWrap}>
                                         <TextInput
                                             style = {globalStyles.input}
@@ -154,22 +134,23 @@ export default function WardrobePage({navigation}) {
                                             onBlur={formikProps.handleBlur('name')}
                                         />
                                     </View>
+                                    {/* Text prints out error. If both statements are true it returns value from RHS: 'formikProps.errors.name' */}
                                     <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.name && formikProps.errors.name }</Text>
-                                    {/* Outputs on the RHS of the && if both are true */}
-                                    
-                                    {/* Dropdown box TO BE IMPLEMENTED*/}
+                                                                        
+                                    {/* Category, chosen in dropdown picker */}
                                     <View style={[globalStyles.boxWrap, {padding: 10}]}>
                                         <Picker
-                                            mode='dropdown'
                                             style={globalStyles.text}
                                             dropdownIconColor={'white'}
-
+                                            mode='dropdown'
+                                            
                                             selectedValue={formikProps.values.category}
                                             onValueChange={formikProps.handleChange('category')}
 
                                             onFocus={() => setPickerFocused(true)}
                                             onBlur={() => setPickerFocused(false)}
                                         >
+                                            {/* List out all types in array categories */}
                                             <Picker.Item value="" label="Select Category" enabled={!pickerFocused}/>
                                             {categories.map((item) => {
                                                 return (
@@ -184,19 +165,20 @@ export default function WardrobePage({navigation}) {
                                     </View>
                                     <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.category && formikProps.errors.category }</Text>
                                 
-                                    {/* Upload image*/}
+                                    {/* Upload image */}
                                     <View style={[globalStyles.boxWrap, {width: 312, height: 360}]}>
                                         <TouchableOpacity 
                                             style={{alignItems: 'center', justifyContent:'center', flex: 1}}
                                             onPress={() => {_pickImage(formikProps.handleChange('image'))}}
                                         >
+                                            {/* Shows image if one's selected after choosing or shows Upload Image to prompt user to choose */}
                                             {formikProps.values.image && formikProps.values.image.length > 0 ?
                                                 <Image source={{ uri: formikProps.values.image }} style={globalStyles.thumbnail} /> : <Text style={globalStyles.text}>Upload Image</Text>}
                                         </TouchableOpacity>
                                     </View>
                                     <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.image && formikProps.errors.image }</Text>
 
-                                    {/* Add button*/}
+                                    {/* Add button, to add to wardrobe*/}
                                     <View style={{marginBottom: 15}}>
                                         <Button title = 'Add' onPress={formikProps.handleSubmit}/>
                                     </View>
@@ -215,6 +197,7 @@ export default function WardrobePage({navigation}) {
                         <Text style={globalStyles.titleText}>My Wardrobe</Text>
                     </View>
                     
+                    {/* Button to add clothes to their wardrobe */}
                     <View style={globalStyles.boxWrap}>
                         <TouchableOpacity onPress={() => setModalOpen(true)}>
                             <Text style={[globalStyles.text, {textAlign: 'center', margin: 6}]}>Add to wardrobe</Text>
@@ -225,7 +208,7 @@ export default function WardrobePage({navigation}) {
                     <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Top</Text>
                     <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5,}]}>
                        <SafeAreaView style={{flex:1}}>
-                            <FlatList horizontal data={clothes} keyExtractor={(item) => item.key} renderItem={({item}) => {
+                            <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
                                 if(RenderTop(item)){
                                     return(
                                         <View style={globalStyles.column}>
@@ -242,7 +225,7 @@ export default function WardrobePage({navigation}) {
                     <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Bottom</Text>
                     <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5,}]}>
                         <SafeAreaView style={{flex:1}}>
-                                <FlatList horizontal data={clothes} keyExtractor={(item) => item.key} renderItem={({item}) => {
+                                <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
                                     if(RenderBottom(item)){
                                         return(
                                             <View style={globalStyles.column}>

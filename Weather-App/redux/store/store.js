@@ -2,10 +2,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import clothReducer from '../reducers/reducers';
 
-const rootReducer = combineReducers({ clothReducer }); // clothReducer: function accepting 2 arguments: initial and action
+// Combines all created reducers into one place, adding all functions inside the reducer, in this case only clothReducer
+const rootReducer = combineReducers({ clothReducer });
 
+// applyMiddleware extends store's abilities and write asynchronous logic that interacts with store 
 export const Store  = createStore(rootReducer, applyMiddleware(thunk));
-
-
-// Created redux store, passed reducer to this store
-// Holds all data app will handle

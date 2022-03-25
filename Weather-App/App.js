@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 // Redux for storing states
-import { Provider, connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Provider } from 'react-redux';
 import { Store } from './redux/store/store';
 
 /* IMPORTS */
