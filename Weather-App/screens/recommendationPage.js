@@ -1,35 +1,55 @@
-import React, {useState, useEffect} from 'react';
+import  React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Directions, ScrollView } from 'react-native-gesture-handler';
- 
 import { LinearGradient } from 'expo-linear-gradient';
-import { globalStyles } from '../styles/global';
 import { MaterialIcons } from '@expo/vector-icons';
+import { globalStyles } from '../styles/global';
 
-import { Picker } from '@react-native-picker/picker';
 import * as Location from 'expo-location';
+import { Picker } from '@react-native-picker/picker';
 
 import {WardrobePage} from './wardrobePage';
-
 import { useSelector, useDispatch } from 'react-redux';
 
+
 const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
+const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 const RecommendationPage = ( {navigation} ) => {
 
-    const {clothesX} = useSelector(state=>state.clothReducer);
+    /*Gradient state */
+    const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
+    const fetchDataFromApi = (latitude, longitude) => {
+        if(latitude && longitude) {
+          fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
+           
+        
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();       //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
+        
+            const currentTimeHour = new Date().getUTCHours();         //Current time hour
+            function gradientChange() {
+                if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
+                    setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+            }
+            gradientChange()
+
+            })
+        }
+    }
+
+    // Wardrobe to display recommendated clothing
+    const wardrobe = useSelector(state=>state.clothReducer.wardrobe);
     const dispatch = useDispatch();
 
     // Recommendation statement and type
     const [todayRecommend, setTodayRecommend] = useState(' ')
     const [recommendType, setRecommendType] = useState(' ') // Clear, Thunderstorm, Rain, Snow, Hazard, Cloudy
 
-    console.log(WardrobePage)
-    // console.log(navigation)
-
-    //Fetch data from API
+    //Fetch data from API: display recommendation: rename to today
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
@@ -59,7 +79,7 @@ const RecommendationPage = ( {navigation} ) => {
          })
         }
       }
-
+    
     const loadForecast = async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -67,14 +87,15 @@ const RecommendationPage = ( {navigation} ) => {
           return;
         }
 
+    
         let location = await Location.getCurrentPositionAsync({highAccuracy: true});            //passing location details 
         fetchDataFromApi(location.coords.latitude, location.coords.longitude)
-      }
-
-      useEffect(() => {loadForecast()}, [])
+    }
+  
+    useEffect(() => {loadForecast()}, [])
 
     return (
-        <LinearGradient style={{flex:1}} colors={colourGradientDay} >
+        <LinearGradient style={{flex:1}} colors={grad} >
             <ScrollView>
                 <Text style={{color: 'white', marginTop: 70, marginLeft: '15%', fontSize: 17.5}}>Our recommendation for today</Text>
                 <View style={[individualBox.header, {marginTop: 20}]}>
