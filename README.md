@@ -36,6 +36,9 @@ DEPENDENCIES TO INSTALL:
 	This one installs the image picker for our specific weather app feature:
 		npm install @react-native-picker/picker --save
 
+	This one installs uuidv4 for creating unique ids in keys for mapped items: 
+		npm install uuidv4
+
 	These installs redux, needed for passing useStates variables between pages:
 		npm install react-redux
 		npm install redux
