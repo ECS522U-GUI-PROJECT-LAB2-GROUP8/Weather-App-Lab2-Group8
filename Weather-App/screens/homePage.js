@@ -4,14 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-/* NOTE TO READ 
-NAVIGATION GUIDE:
-    - Using const (which is like a variable for either holding a function or object) from App.js file by importing them with "import * from '../App.js' "
-    - Navigation.Navigate('ToLoginPage') finds created screen "ToLoginPage" we created, see App.js file for this
-        - Screen with that name uses component "LoginPageScreen" which is just a made function to navigate to Login page.
-*/
-
-
 /*API CONFIGURATION*/
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
@@ -159,7 +151,6 @@ const HomePage = ({navigation}) => {
             var temp55 = data['daily']['5']['temp']['max']
             var temp66 = data['daily']['6']['temp']['max']
  
-            
             setTemp0(Math.round(temp00))
             setTemp1(Math.round(temp11))
             setTemp2(Math.round(temp22))
@@ -178,10 +169,10 @@ const HomePage = ({navigation}) => {
             setUV(UVData);
             setWind(WindData);
 
-            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();          //Get sunrise hour
-            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
-            
-            
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours(); //console.log('Sunrise hour:', sunRiseHour)          //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours(); //console.log('Sunset hour:', sunSetHour)           //Get sunset hour
+
+          
             //Change background colour depending on day/night
             const currentTimeHour = new Date().getUTCHours();         //Current time hour
             function gradientChange() {

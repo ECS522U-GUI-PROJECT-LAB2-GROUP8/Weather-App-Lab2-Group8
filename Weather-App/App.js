@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+// Redux for storing states
+import { Provider } from 'react-redux';
+import { Store } from './redux/store/store';
+
 /* IMPORTS */
 import { MyDrawer } from './navigation/DrawerNavigator';
 
@@ -8,10 +12,14 @@ import { MyDrawer } from './navigation/DrawerNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 
 const App = () => {
+
   return (
-    <NavigationContainer>
-      <MyDrawer/>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <MyDrawer/>
+      </NavigationContainer>
+    </Provider>
+    
   );
 }
 

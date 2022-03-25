@@ -4,15 +4,13 @@ import * as Location from 'expo-location';
 import { StyleSheet, View } from 'react-native';
 
 /*Pages*/
+/* Pages and assets*/
 import homePage from '../screens/homePage';
-import recommendationPage from '../screens/recommendationPage';
-import wardrobePage from '../screens/wardrobePage';
-import daysAhead from '../screens/daysAhead';
+import RecommendationPage from '../screens/recommendationPage';
+import WardrobePage from '../screens/wardrobePage';
+import DaysAhead from '../screens/daysAhead';
 
-/*Navigation Settings*/
-import { createStackNavigator } from '@react-navigation/stack';
-
-// For navigation bar
+/* For navigation bar */
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -59,7 +57,6 @@ const WardrobePageScreen = () => (
 )
 
 /* Navigation Drawer BAR */
-
 const Drawer = createDrawerNavigator();
 
 export function MyDrawer() {
@@ -95,7 +92,6 @@ export function MyDrawer() {
 }
 
 /*Structure*/
- 
 const CustomDrawer = (props) => {
 
       /*Gradient state */
