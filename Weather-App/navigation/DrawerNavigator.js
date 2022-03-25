@@ -2,94 +2,52 @@ import 'react-native-gesture-handler'; // MUST BE TOP
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-
-/*Pages*/
+/* Pages and assets*/
 import homePage from '../screens/homePage';
-import recommendationPage from '../screens/recommendationPage';
-import wardrobePage from '../screens/wardrobePage';
-import daysAhead from '../screens/daysAhead';
+import RecommendationPage from '../screens/recommendationPage';
+import WardrobePage from '../screens/wardrobePage';
+import DaysAhead from '../screens/daysAhead';
 
-/*Navigation Settings*/
-import { createStackNavigator } from '@react-navigation/stack';
-
-// For navigation bar
+/* For navigation bar */
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 
-const HomeStack = createStackNavigator();
-const SuggestionStack = createStackNavigator();
-const DaysAheadStack = createStackNavigator();
-const WardrobeStack = createStackNavigator();
-const LoginStack = createStackNavigator();
-
-/*Navigation rendering function components*/ 
-
-const HomePageScreen = () => (
-  <HomeStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <HomeStack.Screen name="Home" component={homePage} />
-  </HomeStack.Navigator>
-)
-
-const SuggestionPageScreen = () => (
-  <SuggestionStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <SuggestionStack.Screen name="Suggestion" component={recommendationPage} />
-  </SuggestionStack.Navigator>
-)
-
-const DaysAheadPageScreen = () => (
-  <DaysAheadStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <DaysAheadStack.Screen name="Days Ahead" component={daysAhead} />
-  </DaysAheadStack.Navigator>
-)
-
-const WardrobePageScreen = () => (
-  <WardrobeStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <WardrobeStack.Screen name="Wardrobe" component={wardrobePage} />
-  </WardrobeStack.Navigator>
-)
-
 /* Navigation Drawer BAR */
-
 const Drawer = createDrawerNavigator();
+
 export function MyDrawer() {
+
   return (
-    <Drawer.Navigator 
-      screenOptions={{headerTransparent: true, headerTitle: () => null }} 
-      initialRouteName="Home" 
-      drawerContent={props => <CustomDrawer {...props}/>}>
-      <Drawer.Screen
-        name="HomeScreen"
-        component={HomePageScreen}
-        options={{ drawerLabel: 'Home'}}
-      />
-      <Drawer.Screen
-        name="SuggestionsScreen"
-        component={SuggestionPageScreen}
-        options={{ drawerLabel: 'Recommendation' }}
-      />
-      <Drawer.Screen
-        name="DaysAheadScreen"
-        component={DaysAheadPageScreen}
-        options={{ drawerLabel: 'Days Ahead' }}
-      />
-      <Drawer.Screen
-        name="WardrobeScreen"
-        component={WardrobePageScreen}
-        options={{ drawerLabel: 'Wardrobe' }}
-      />
-    </Drawer.Navigator>
+        <Drawer.Navigator 
+        screenOptions={{headerTransparent: true, headerTitle: () => null }} 
+        initialRouteName="Home" 
+        drawerContent={props => <CustomDrawer {...props}/>}>
+          <Drawer.Screen
+            name="HomeScreen"
+            component={homePage}
+            options={{ drawerLabel: 'Home'}}
+          />
+          <Drawer.Screen
+            name="SuggestionsScreen"
+            component={RecommendationPage}
+            options={{ drawerLabel: 'Recommendation' }}
+          />
+          <Drawer.Screen
+            name="DaysAheadScreen"
+            component={DaysAhead}
+            options={{ drawerLabel: 'Days Ahead' }}
+          >
+          </Drawer.Screen>
+          <Drawer.Screen
+            name="WardrobeScreen"
+            component={WardrobePage}
+            options={{ drawerLabel: 'Wardrobe' }}
+          >
+          </Drawer.Screen>
+      </Drawer.Navigator>
   );
 }
 
 /*CSS Styling*/
-
 const styles = StyleSheet.create({    //NAV BAR STYLING
   container: {
     flex: 1,
@@ -99,7 +57,6 @@ const styles = StyleSheet.create({    //NAV BAR STYLING
 })
 
 /*Structure*/
- 
 const CustomDrawer = (props) => {
   return(
     <View style={styles.container}>

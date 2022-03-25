@@ -1,10 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-
 
 export const globalStyles = StyleSheet.create({
     container: {
-        flex: 1, // dissapears content if not setting height
+        flex: 1,
         margin: 24,
         marginTop: 70,
     },
@@ -12,11 +10,13 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 24,
     },
-    header: {
-        
+    modalHeader: {
+        marginTop: 20,
+        marginBottom: 30, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
     },
     titleText: {
-        //fontFamily: 'RobotoMono-Regular',
         fontSize: 24,
         fontWeight: '400',
         color: '#FFFFFF', 
@@ -26,7 +26,6 @@ export const globalStyles = StyleSheet.create({
         fontWeight: '400',
     },
     text: {
-        //fontFamily: 'RobotoMono-Regular',
         fontSize: 16,
         color: '#FFFFFF', 
     },
@@ -67,10 +66,7 @@ export const globalStyles = StyleSheet.create({
     image: {
         flex: 1,
         aspectRatio: 0.70,
-        //height: undefined,
-        //width: '100%',
         resizeMode: "contain", //contain, cover
-        //borderRadius: 40,
     },
     errorText: {
         color: 'crimson',
