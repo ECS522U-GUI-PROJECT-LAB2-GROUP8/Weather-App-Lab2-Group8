@@ -1,6 +1,7 @@
 import  React, { useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
- 
+import { StyleSheet, Text, FlatList, View, Image } from 'react-native';
+import { v4 as uuid } from 'uuid'; 
+
 import { Directions, ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,6 +10,21 @@ import { globalStyles } from '../styles/global';
 import * as Location from 'expo-location';
 
 import { useSelector, useDispatch } from 'react-redux';
+
+// Images
+import flaredDress from '../assets/Wardrobe/Casual/flaredDress.webp';
+import tshirt from '../assets/Wardrobe/Casual/tshirt.png';
+import fleece from '../assets/Wardrobe/Spring/Causal/fleece.webp';
+import jacket from '../assets/Wardrobe/Spring/Causal/jacket.webp';
+
+import jeans from '../assets/Wardrobe/Spring/Causal/jeans.jpeg';
+import sweatpants from '../assets/Wardrobe/Casual/Sweatpants.webp';
+import skirt from '../assets/Wardrobe/Summer/Smart/Skirt.png'
+
+import boots from '../assets/Wardrobe/Shoes/boots2.webp';
+import sneakers from '../assets/Wardrobe/Shoes/sneakers.webp';
+import trainers from '../assets/Wardrobe/Shoes/Trainers.webp';
+import slides from '../assets/Wardrobe/Shoes/Slides.webp';
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
@@ -24,6 +40,65 @@ const RecommendationPage = ( {navigation} ) => {
     // Recommendation statement and type
     const [todayRecommend, setTodayRecommend] = useState(' ')
     const [recommendType, setRecommendType] = useState(' ') // Clear, Thunderstorm, Rain, Snow, Hazard, Cloudy
+
+    const [recommendClothes, setRecommendClothes] = useState([
+        { name:'flaredDress', category: 'Dresses', image: Image.resolveAssetSource(flaredDress).uri, key: uuid() },
+        { name:'White t-shirt', category: 'T-shirt', image: Image.resolveAssetSource(tshirt).uri, key: uuid() },
+        { name:'Brown Fleece', category: 'Coat', image: Image.resolveAssetSource(fleece).uri, key: uuid() },
+        { name:'Jacket', category: 'Jacket', image: Image.resolveAssetSource(jacket).uri, key: uuid() },
+
+        { name:'Sweatpants', category: 'Pants', image: Image.resolveAssetSource(sweatpants).uri, key: uuid() },
+        { name:'Long Skirt', category: 'Pants', image: Image.resolveAssetSource(skirt).uri, key: uuid() },
+        { name:'Jean', category: 'Jean', image: Image.resolveAssetSource(jeans).uri, key: uuid() },
+
+        { name:'White trainers', category: 'Trainers', image: Image.resolveAssetSource(trainers).uri, key: uuid() },
+        { name:'My sliders', category: 'Slides', image: Image.resolveAssetSource(slides).uri, key: uuid() },
+        { name:'Boots', category: 'Boots', image: Image.resolveAssetSource(boots).uri, key: uuid() },
+        { name:'Sneakers', category: 'Sneakers', image: Image.resolveAssetSource(sneakers).uri, key: uuid() },
+    ])
+
+    const tops = ["Tops", "T-shirt", "Hoodies", "Sweatshirt", "Jacket", "Gilet", "Shirt", "Jumper", "Coat", "Dresses", "Blouses"]
+    const bottoms = ["Trouser", "Tights", "Shorts", "Jean", "Shorts", "Pants", "Skirts"]
+    const shoes = ["Trainers", "Sneakers", "Slides", "Dress Shoes", "Boots"]
+
+    function renderClothes(item){
+        if(recommendType === "Clear"){
+            // Tops, T-shirt, Shirt, blouses, Trouser, Pants, Skirts, Trainers, Sneakers, Slides
+            if(['Tops', 'T-shirt', 'Shirt', 'Blouses', 'Trouser', 'Pants', 'Skirts', 'Trainers', 'Sneakers', 'Slides'].indexOf(item.category) >= 0){   
+                return true;
+            }
+            return false;
+        }
+        else if(recommendType === "Thunderstorm" || recommendType === "Rain"){
+            // Coat, Hoodies, Jumper, Pants, Jean, Trouser, Boots, Trainers
+            if(['Coat', 'Hoodies', 'Jumper', 'Trouser', 'Jean', 'Pants', 'Boots', 'Trainers'].indexOf(item.category) >= 0){   
+                return true;
+            }
+            return false;
+        }
+        else if(recommendType === "Snow"){
+            // Coat, Hoodies, Gilet, Sweatshirt, Jumper, Pants, Jean, Trouser, Boots
+            if(['Coat', 'Hoodies', 'Gilet', 'Sweatshirt', 'Jumper', 'Pants', 'Jean', 'Trouser', 'Boots'].indexOf(item.category) >= 0){   
+                return true;
+            }
+            return false;
+        }
+        else if(recommendType === "Hazard"){
+            // Coat, Hoodies, Jumper, Pants, Jean, Trouser, Boots, Trainers
+            if(['Coat', 'Hoodies', 'Jumper', 'Pants', 'Jean', 'Trouser', 'Boots', 'Trainers'].indexOf(item.category) >= 0){   
+                return true;
+            }
+            return false;
+        }
+        else if(recommendType === "Cloudy"){
+            // Tops, T-shirt, Shirt, blouses, Trouser, Pants, Skirts, Trainers, Sneakers, Slides
+            if(['Tops', 'T-shirt', 'Shirt', 'Blouses', 'Trouser', 'Pants', 'Skirts', 'Trainers', 'Sneakers', 'Slides'].indexOf(item.category) >= 0){   
+                return true;
+            }
+            return false;
+        }
+
+    }
 
     //Fetch data from API: display recommendation: rename to today
     const fetchDataFromApi = (latitude, longitude) => {
@@ -92,25 +167,40 @@ const RecommendationPage = ( {navigation} ) => {
         <LinearGradient style={{flex:1}} colors={grad} >
             <ScrollView>
                 <Text style={{color: 'white', marginTop: 70, marginLeft: '15%', fontSize: 17.5}}>Our recommendation for today</Text>
+                
                 <View style={[individualBox.header, {marginTop: 20}]}>
                     <Text style={globalStyles.text}>{todayRecommend}</Text>
                 </View>
-                <View style={{flexDirection: 'row', marginTop: 50}}>
-                    <View style={individualBox.container}>
+
+                <Text style={{color: 'white', marginTop: 50, marginLeft: '5%', fontSize: 17.5}}>Clothes from your wardrobe</Text>
+                <View style={{flexDirection: 'row', marginTop: 20}}>
+                    <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
+                        if(renderClothes(item)){
+                            return(
+                                <View style={individualBox.container}>
+                                    <Image source={{ uri: item.image }} style={[globalStyles.image, {marginTop: 5}]} />
+                                    <Text style={[globalStyles.text, {paddingBottom: 10}]}><Text style={{fontWeight:'bold'}}>{item.category}</Text>: {item.name}</Text>
+                                </View>
+                            )
+                        }
                         
-                    </View>
-                    <View style={individualBox.container}>
-
-                    </View>
+                    }}/>
                 </View>
-                <View style={{flexDirection: 'row', marginTop: 50}}>
-                    <View style={individualBox.container}>
-                            
-                    </View>
-                    <View style={individualBox.container}>
-
-                    </View>
+                
+                <Text style={{color: 'white', marginTop: 50, marginLeft: '5%', fontSize: 17.5}}>Our recommendation</Text>
+                <View style={{flexDirection: 'row', marginTop: 20, marginBottom: 20}}>
+                    <FlatList horizontal data={recommendClothes} keyExtractor={(item) => item.key} renderItem={({item}) => {
+                        if(renderClothes(item)){
+                            return(
+                                <View style={individualBox.container}>
+                                    <Image source={{ uri: item.image }} style={[globalStyles.image, {marginTop: 5}]} />
+                                    <Text style={[globalStyles.text, {paddingBottom: 10}]}><Text style={{fontWeight:'bold'}}>{item.category}</Text>: {item.name}</Text>
+                                </View>
+                            )
+                        }
+                    }}/>
                 </View>
+
             </ScrollView>
         </LinearGradient>
     );
@@ -118,11 +208,12 @@ const RecommendationPage = ( {navigation} ) => {
 
 const individualBox = StyleSheet.create({
     container: {
+        flex: 1,
+        minHeight: 300,
+        marginHorizontal: 10,
+        paddingHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        width: '37.5%',
-        height: 300,
-        marginLeft: '8%',
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         borderRadius: 20,
     },
