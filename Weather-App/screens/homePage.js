@@ -216,7 +216,7 @@ const HomePage = ({navigation}) => {
 
     //Navigation onPress handler
     const pressHandler = () => {
-        navigation.navigate('SuggestionsScreen');
+        navigation.navigate('RecommendationScreen');
     }
 
     /*OUTPUT============================================================================================================================ */
