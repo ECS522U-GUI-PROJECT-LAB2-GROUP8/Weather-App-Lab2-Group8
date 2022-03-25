@@ -26,10 +26,39 @@ const RecommendationPage = ( {navigation} ) => {
     const [recommendType, setRecommendType] = useState(' ') // Clear, Thunderstorm, Rain, Snow, Hazard, Cloudy
 
     //Fetch data from API: display recommendation: rename to today
+    const fetchDataFromApi = (latitude, longitude) => {
+        if(latitude && longitude) {
+          fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
+          
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();       //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
+        
+            const currentTimeHour = new Date().getUTCHours();         //Current time hour
+            function gradientChange() {
+                if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
+                    setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+            }
+            gradientChange()
+            })
+        }
+    }
+
     const fetchDataFromApiToday = (latitude, longitude) => {
         if(latitude && longitude) {
           fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
-            //console.log(data) //Comment out once done
+          
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();       //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
+        
+            const currentTimeHour = new Date().getUTCHours();         //Current time hour
+            function gradientChange() {
+                if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
+                    setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+            }
+            gradientChange()
+
             const weatherID = data['weather']['0']['id']
             
             if (weatherID === 800) {
@@ -52,9 +81,9 @@ const RecommendationPage = ( {navigation} ) => {
                 setRecommendType('Cloudy')
             }
             
-         })
+            })
         }
-      }
+    }
     
     const loadForecast = async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
