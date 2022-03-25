@@ -228,6 +228,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column'}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -245,6 +246,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column'}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -262,6 +264,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column'}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -279,6 +282,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column'}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -296,6 +300,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column'}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -313,6 +318,7 @@ export default function DaysAhead({navigation}) {
                         </View>
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'column', marginBottom: 50}}>
                     <View style= {individualSection.container}>
                         <View style={{flexDirection: 'row'}}>
@@ -377,9 +383,9 @@ const extrasText = StyleSheet.create({
 const weatherDescription = StyleSheet.create({
     container: {
         color: 'white',
-        fontSize: 23,
+        fontSize: 20,
         marginTop: '2%',
-        marginLeft: '5%' ,
+        marginLeft: '5%',
     }
 })
 

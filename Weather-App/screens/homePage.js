@@ -222,79 +222,79 @@ const HomePage = ({navigation}) => {
     /*OUTPUT============================================================================================================================ */
     return (
         <LinearGradient style={{flex: 1}} colors={grad}>
-                <ScrollView>
-                    <View style= {todaysWeather.container}>
-                        <Text style={{fontSize: 50, textAlign: 'center', color: 'white' }}>{temp}°C</Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={{fontSize: 16.5, color: 'white'}}> {weatherType} </Text>
-                            <Image source={{uri: icon.toString()} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
-                        </View>
+            <ScrollView>
+                <View style= {todaysWeather.container}>
+                    <Text style={{fontSize: 50, textAlign: 'center', color: 'white' }}>{temp}°C</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{fontSize: 16.5, color: 'white'}}> {weatherType} </Text>
+                        <Image source={{uri: icon.toString()} } style={{width:40, height:40, resizeMode: 'contain'}}></Image> 
                     </View>
-                    <View style={locationAndTime.container}>
-                        <Text style={{color: 'white', fontSize: 20}}>{location}</Text>
-                        <Text style={{color: 'white', marginTop: 10}}>Feels like {feelsLike}°C</Text>
-                        <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHourBefore9()}:{minuteHourBefore9()}</Text>
+                </View>
+                <View style={locationAndTime.container}>
+                    <Text style={{color: 'white', fontSize: 20}}>{location}</Text>
+                    <Text style={{color: 'white', marginTop: 10}}>Feels like {feelsLike}°C</Text>
+                    <Text style={{color: 'white', marginTop: 5}}>{day0} {timeHourBefore9()}:{minuteHourBefore9()}</Text>
+                </View>
+                <View style={recommendationSection.container}>
+                    <TouchableOpacity onPress={ pressHandler }>
+                        <Text style={{color: 'white', textAlign: 'center'}}>What should I wear today</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={weekForeCastContainer.container}>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp0}°C</Text>
+                        <Image source={ {uri: dayIcon0.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day0}</Text>
                     </View>
-                    <View style={recommendationSection.container}>
-                        <TouchableOpacity onPress={ pressHandler }>
-                            <Text style={{color: 'white', textAlign: 'center'}}>What should I wear today</Text>
-                        </TouchableOpacity>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp1}°C</Text>
+                        <Image source={ {uri: dayIcon1.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day1}</Text>
                     </View>
-                    <View style={weekForeCastContainer.container}>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp0}°C</Text>
-                            <Image source={ {uri: dayIcon0.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day0}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp1}°C</Text>
-                            <Image source={ {uri: dayIcon1.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day1}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp2}°C</Text>
-                            <Image source={ {uri: dayIcon2.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day2}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp3}°C</Text>
-                            <Image source={ {uri: dayIcon3.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day3}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp4}°C</Text>
-                            <Image source={ {uri: dayIcon4.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day4}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp5}°C</Text>
-                            <Image source={ {uri: dayIcon5.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day5}</Text>
-                        </View>
-                        <View style={individualDay.container}>
-                            <Text style={tempDaily.container} >{temp6}°C</Text>
-                            <Image source={ {uri: dayIcon6.toString()}  }style={{width:30, height:30, resizeMode: 'contain'}}></Image>
-                            <Text style={textDay.container} >{day6}</Text>
-                        </View>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp2}°C</Text>
+                        <Image source={ {uri: dayIcon2.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day2}</Text>
                     </View>
-                    <View style={extraSection.container} >
-                        <View style= { extraSectionIndividualStat.container}>
-                            <Image source={ require('../icons/humid_drop.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
-                            <Text style ={extraSectionIndividualText.container} >Humidity</Text>
-                            <Text style ={extraSectionIndividualText.container} >{humidity}%</Text>
-                        </View>
-                        <View style= { extraSectionIndividualStat.container}>
-                            <Image source={ require('../icons/UV_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
-                            <Text style ={extraSectionIndividualText.container} >UV Index</Text>
-                            <Text style ={extraSectionIndividualText.container} >{UV}</Text>
-                        </View>
-                        <View style= { extraSectionIndividualStat.container}>
-                            <Image source={ require('../icons/wind_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
-                            <Text style ={extraSectionIndividualText.container} >Wind</Text>
-                            <Text style ={extraSectionIndividualText.container} >{wind}km/h</Text>
-                        </View>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp3}°C</Text>
+                        <Image source={ {uri: dayIcon3.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day3}</Text>
+                    </View>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp4}°C</Text>
+                        <Image source={ {uri: dayIcon4.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day4}</Text>
+                    </View>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp5}°C</Text>
+                        <Image source={ {uri: dayIcon5.toString()} } style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day5}</Text>
+                    </View>
+                    <View style={individualDay.container}>
+                        <Text style={tempDaily.container} >{temp6}°C</Text>
+                        <Image source={ {uri: dayIcon6.toString()}  }style={{width:30, height:30, resizeMode: 'contain'}}></Image>
+                        <Text style={textDay.container} >{day6}</Text>
+                    </View>
+                </View>
 
+                <View style={extraSection.container} >
+                    <View style= { extraSectionIndividualStat.container}>
+                        <Image source={ require('../icons/humid_drop.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                        <Text style ={extraSectionIndividualText.container} >Humidity</Text>
+                        <Text style ={extraSectionIndividualText.container} >{humidity}%</Text>
                     </View>
+                    <View style= { extraSectionIndividualStat.container}>
+                        <Image source={ require('../icons/UV_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                        <Text style ={extraSectionIndividualText.container} >UV Index</Text>
+                        <Text style ={extraSectionIndividualText.container} >{UV}</Text>
+                    </View>
+                    <View style= { extraSectionIndividualStat.container}>
+                        <Image source={ require('../icons/wind_icon.png') } style={{width:60, height:60, resizeMode: 'contain'}}></Image>
+                        <Text style ={extraSectionIndividualText.container} >Wind</Text>
+                        <Text style ={extraSectionIndividualText.container} >{wind}km/h</Text>
+                    </View>
+                </View>
             </ScrollView>
         </LinearGradient>
     );
@@ -317,7 +317,7 @@ const todaysWeather = StyleSheet.create({
         backgroundColor: ' rgba(0, 0, 0, 0)',
         width: '30%',
         minHeight: 200,
-        marginTop: 100,
+        marginTop: 50,
         marginRight: '35%',
         marginLeft: '35%',
     }
@@ -363,9 +363,9 @@ const weekForeCastContainer = StyleSheet.create({
 
 const individualDay = StyleSheet.create({
     container: {
-        marginLeft: '3%',
-        marginRight: '3%',
-        marginTop: 20 ,
+        marginLeft: '2%',
+        marginRight: '2%',
+        marginTop: 10 ,
     }
 })
 
@@ -390,7 +390,8 @@ const extraSection = StyleSheet.create({
         backgroundColor: ' rgba(0, 0, 0, 0.18)',
         width: '84%', 
         minHeight: 150,
-        marginTop: 30 ,
+        marginTop: 30,
+        marginBottom: 30,
         marginRight: '8%',
         marginLeft: '8%',
         borderRadius: 20,
