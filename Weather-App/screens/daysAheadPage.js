@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
-export default function DaysAhead({navigation}) {
+export default function DaysAheadPage({navigation}) {
 
     /*Gradient state */
     const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
