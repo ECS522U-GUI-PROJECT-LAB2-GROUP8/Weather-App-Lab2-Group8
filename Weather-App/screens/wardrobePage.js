@@ -311,7 +311,7 @@ export default function WardrobePage({navigation}) {
                                                 <Text style={[globalStyles.text, {paddingBottom: 10}]}><Text style={{fontWeight:'bold'}}>{item.category}</Text>: {item.name}</Text>
                                             </View>
                                         )
-                                    } 
+                                    }
                                 }}/>
                         </SafeAreaView>
                     </View>

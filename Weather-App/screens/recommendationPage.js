@@ -25,6 +25,32 @@ const RecommendationPage = ( {navigation} ) => {
     const [todayRecommend, setTodayRecommend] = useState(' ')
     const [recommendType, setRecommendType] = useState(' ') // Clear, Thunderstorm, Rain, Snow, Hazard, Cloudy
 
+    const tops = ["Tops", "T-shirt", "Hoodies", "Sweatshirt", "Jacket", "Gilet", "Shirt", "Jumper", "Coat", "Dresses", "Blouses"]
+    const bottoms = ["Trouser", "Tights", "Shorts", "Jean", "Shorts", "Pants", "Skirts"]
+    const shoes = ["Trainers", "Sneakers", "Slides", "Dress Shoes", "Boots"]
+
+    function renderClothes(){
+        if(recommendType === "Clear"){
+
+        }
+        else if(recommendType === "Thunderstorm"){
+
+        }
+        else if(recommendType === "Rain"){
+            
+        }
+        else if(recommendType === "Snow"){
+            
+        }
+        else if(recommendType === "Hazard"){
+            
+        }
+        else if(recommendType === "Cloudy"){
+            
+        }
+
+    }
+
     //Fetch data from API: display recommendation: rename to today
     const fetchDataFromApi = (latitude, longitude) => {
         if(latitude && longitude) {
@@ -92,25 +118,31 @@ const RecommendationPage = ( {navigation} ) => {
         <LinearGradient style={{flex:1}} colors={grad} >
             <ScrollView>
                 <Text style={{color: 'white', marginTop: 70, marginLeft: '15%', fontSize: 17.5}}>Our recommendation for today</Text>
+                
                 <View style={[individualBox.header, {marginTop: 20}]}>
                     <Text style={globalStyles.text}>{todayRecommend}</Text>
                 </View>
+
                 <View style={{flexDirection: 'row', marginTop: 50}}>
                     <View style={individualBox.container}>
                         
                     </View>
+
                     <View style={individualBox.container}>
 
                     </View>
                 </View>
+
                 <View style={{flexDirection: 'row', marginTop: 50}}>
                     <View style={individualBox.container}>
                             
                     </View>
+
                     <View style={individualBox.container}>
 
                     </View>
                 </View>
+
             </ScrollView>
         </LinearGradient>
     );
