@@ -4,8 +4,6 @@ import  React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
  
-
-const colourGradientDay = ["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]    //Day/sunny gradient
 const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 const RecommendationPage = ( {navigation} ) => {

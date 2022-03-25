@@ -1,8 +1,9 @@
-import React, { useState, useLayoutEffect, Component } from 'react';
+import React, { useState, useLayoutEffect, Component, useEffect } from 'react';
 import {StyleSheet, View, Text, Button, TextInput, ScrollView, FlatList, TouchableOpacity, Modal, Image, SafeAreaView } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../styles/global';
+import * as Location from 'expo-location';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { set } from 'react-native-reanimated';
@@ -12,7 +13,8 @@ import * as yup from 'yup';
 
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
-
+ 
+const API_KEY = `06f97740da75d54620d2a816bf6c9051`;
 
 const ClothSchema = yup.object().shape({
     name: yup.string().required(), 
@@ -21,6 +23,42 @@ const ClothSchema = yup.object().shape({
 }) 
 
 export default function WardrobePage({navigation}) {    
+    
+    /*Gradient state */
+    const [grad, setGrad] = useState(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"])
+
+    const fetchDataFromApi = (latitude, longitude) => {
+        if(latitude && longitude) {
+          fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`).then(response => response.json()).then(data => {
+           
+        
+            const sunRiseHour = new Date(data['current']['sunrise'] * 1000).getUTCHours();       //Get sunrise hour
+            const sunSetHour = new Date(data['current']['sunset'] * 1000).getUTCHours();           //Get sunset hour
+        
+            const currentTimeHour = new Date().getUTCHours();         //Current time hour
+            function gradientChange() {
+                if ((currentTimeHour >= sunSetHour) || (currentTimeHour <= sunRiseHour)) {
+                    setGrad(["rgba(52, 50, 189, 1)",  "rgba(113, 111, 233, 1)"])
+                } else { setGrad(["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)"]) }
+            }
+            gradientChange()
+
+            })
+        }
+    }
+    const loadForecast = async () => {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          //fetchDataFromApi("40.7128", "-74.0060")
+          return;
+        }
+    
+        let location = await Location.getCurrentPositionAsync({highAccuracy: true});            //passing location details 
+        fetchDataFromApi(location.coords.latitude, location.coords.longitude)
+    }
+  
+    useEffect(() => {loadForecast()}, [])
+
     
     const [modalOpen, setModalOpen] = useState(false);
     
@@ -102,11 +140,11 @@ export default function WardrobePage({navigation}) {
     // [To resolve]: virtualised list issue, 2 scroll components clash: ScrollView and FlatList
 
     return (
-        <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
+        <LinearGradient style={{flex: 1}} colors={grad}>
             
             <Modal visible={modalOpen} animationType='slide'>
                 <ScrollView>
-                <LinearGradient style={{flex: 1}} colors={["rgba(62, 185, 255, 1)", "rgba(255, 214, 0, 0.43)", "rgba(170, 188, 252, 0)"]}>
+                <LinearGradient style={{flex: 1}} colors={grad}>
                     <View style={globalStyles.modalContent}>
                         
                         <View style={[globalStyles.header, {marginBottom: 30, flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}]}>
@@ -206,7 +244,7 @@ export default function WardrobePage({navigation}) {
                     
                     {/* Top clothes box */}
                     <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Top</Text>
-                    <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5,}]}>
+                    <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5}]}>
                        <SafeAreaView style={{flex:1}}>
                             <FlatList horizontal data={clothes} keyExtractor={(item) => item.key} renderItem={({item}) => {
                                 if(RenderTop(item)){

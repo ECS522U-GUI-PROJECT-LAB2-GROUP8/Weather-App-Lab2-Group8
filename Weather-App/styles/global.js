@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 export const globalStyles = StyleSheet.create({
@@ -39,7 +38,9 @@ export const globalStyles = StyleSheet.create({
     },
     boxWrap: {
         borderRadius: 15,
-        backgroundColor: 'rgba(4, 165, 255, 0.45)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: ' rgba(0, 0, 0, 0.18)', //!!!!!!!!1
     },
     modalToggle: {
         borderWidth: 1,
