@@ -188,7 +188,7 @@ const HomePage = ({navigation}) => {
     const loadForecast = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        //fetchDataFromApi("40.7128", "-74.0060")
+        //fetchDataFromApi("51.5235, -0.0330")
         return;
       }
   

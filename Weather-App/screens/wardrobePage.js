@@ -80,25 +80,36 @@ export default function WardrobePage({navigation}) {
     const [pickerFocused, setPickerFocused] = useState(false) // Reset's placeholder for 'Select category'
     const categories = [
         // Top
-        {name: "Tops & T-shirt", id: 1},
-        {name: "Hoodies & Sweatshirts", id: 2},
-        {name: "Jackets & Gilets", id: 3},
-        {name: "Shirt", id: 4},
-        {name: "Jumpers", id: 5},
-        {name: "Coat", id: 6},
-        {name: "Dresses", id: 7},
-        {name: "Blouses", id: 8},
+        {name: "Tops", id: 1},
+        {name: "T-shirt", id: 2},
+        {name: "Hoodies", id: 3},
+        {name: "Sweatshirt", id: 4},
+        {name: "Jacket", id: 5},
+        {name: "Gilet", id: 5},
+        {name: "Shirt", id: 6},
+        {name: "Jumper", id: 7},
+        {name: "Coat", id: 8},
+        {name: "Dresses", id: 9},
+        {name: "Blouses", id: 10},
         
         // Bottom
-        {name: "Trousers & Tights", id: 9},
-        {name: "Jeans", id: 10},
-        {name: "Shorts", id: 11},
-        {name: "Pants", id: 12},
-        {name: "Skirts", id: 12}
+        {name: "Trouser", id: 11},
+        {name: "Tights", id: 12},
+        {name: "Jean", id: 13},
+        {name: "Shorts", id: 14},
+        {name: "Pants", id: 15},
+        {name: "Skirts", id: 16},
+
+        // Shoes
+        {name: "Trainers", id: 17},
+        {name: "Sneakers", id: 18},
+        {name: "Slides", id: 19},
+        {name: "Dress Shoes", id: 20},
+        {name: "Boots", id: 21},
     ]
 
     function RenderTop(item) {
-        const tops = ["Tops & T-shirt", "Hoodies & Sweatshirts", "Jackets & Gilets", "Shirt", "Jumpers", "Coat", "Dresses", "Blouses"]
+        const tops = ["Tops", "T-shirt", "Hoodies", "Sweatshirt", "Jacket", "Gilet", "Shirt", "Jumper", "Coat", "Dresses", "Blouses"]
         if(tops.includes(item.category))
         {
             return true;
@@ -107,8 +118,17 @@ export default function WardrobePage({navigation}) {
     }
 
     function RenderBottom(item) {
-        const bottoms = ["Trousers & Tights", "Jeans", "Shorts", "Pants", "Skirts"]
+        const bottoms = ["Trouser", "Tights", "Shorts", "Jean", "Shorts", "Pants", "Skirts"]
         if(bottoms.includes(item.category))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function RenderShoe(item) {
+        const shoes = ["Trainers", "Sneakers", "Slides", "Dress Shoes", "Boots"]
+        if(shoes.includes(item.category))
         {
             return true;
         }
@@ -140,7 +160,7 @@ export default function WardrobePage({navigation}) {
             <Modal visible={modalOpen} animationType='slide'>
                 <ScrollView>
                 <LinearGradient style={{flex: 1}} colors={grad}>
-                    <View style={globalStyles.modalContent}>
+                    <View style={globalStyles.modalContainer}>
                         
                         {/* Title with close button*/}
                         <View style={globalStyles.modalHeader}>
@@ -165,22 +185,23 @@ export default function WardrobePage({navigation}) {
                                 <View style={{flex: 1}}>
                                     
                                     {/* Enter name field */}
-                                    <View style={globalStyles.boxWrap}>
+                                    <View style={[globalStyles.boxWrap, {flex: 1}]}>
                                         <TextInput
-                                            style = {globalStyles.input}
+                                            style = {[globalStyles.input, {flex: 1, color: 'white'}]}
                                             placeholder='Enter name...'
+                                            placeholderTextColor={'grey'}
                                             onChangeText={formikProps.handleChange('name')}
                                             value={formikProps.values.name}
                                             onBlur={formikProps.handleBlur('name')}
                                         />
                                     </View>
                                     {/* Text prints out error. If both statements are true it returns value from RHS: 'formikProps.errors.name' */}
-                                    <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.name && formikProps.errors.name }</Text>
+                                    <Text style={[globalStyles.errorText, {marginBottom: 10}]}>{ formikProps.touched.name && formikProps.errors.name }</Text>
                                                                         
                                     {/* Category, chosen in dropdown picker */}
-                                    <View style={[globalStyles.boxWrap, {padding: 10}]}>
+                                    <View style={[globalStyles.boxWrap, globalStyles.pickerContainer, {flex: 1}]}>
                                         <Picker
-                                            style={globalStyles.text}
+                                            style={[globalStyles.text, globalStyles.picker]}
                                             dropdownIconColor={'white'}
                                             mode='dropdown'
                                             
@@ -203,10 +224,10 @@ export default function WardrobePage({navigation}) {
                                             })}
                                         </Picker>
                                     </View>
-                                    <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.category && formikProps.errors.category }</Text>
+                                    <Text style={[globalStyles.errorText, {marginBottom: 10}]}>{ formikProps.touched.category && formikProps.errors.category }</Text>
                                 
                                     {/* Upload image */}
-                                    <View style={[globalStyles.boxWrap, {width: 312, height: 360}]}>
+                                    <View style={[globalStyles.boxWrap, globalStyles.image_holder]}>
                                         <TouchableOpacity 
                                             style={{alignItems: 'center', justifyContent:'center', flex: 1}}
                                             onPress={() => {_pickImage(formikProps.handleChange('image'))}}
@@ -216,7 +237,7 @@ export default function WardrobePage({navigation}) {
                                                 <Image source={{ uri: formikProps.values.image }} style={globalStyles.thumbnail} /> : <Text style={globalStyles.text}>Upload Image</Text>}
                                         </TouchableOpacity>
                                     </View>
-                                    <Text style={[globalStyles.errorText, {marginBottom: 20}]}>{ formikProps.touched.image && formikProps.errors.image }</Text>
+                                    <Text style={[globalStyles.errorText, {marginBottom: 5}]}>{ formikProps.touched.image && formikProps.errors.image }</Text>
 
                                     {/* Add button, to add to wardrobe*/}
                                     <View style={{marginBottom: 15}}>
@@ -233,8 +254,8 @@ export default function WardrobePage({navigation}) {
             {/* Main Wardrobe page */}
             <ScrollView>
                 <View style={globalStyles.container}>
-                    <View style={[globalStyles.header, {marginBottom: 15}]}>
-                        <Text style={globalStyles.titleText}>My Wardrobe</Text>
+                    <View style={[globalStyles.header, {marginTop: 60, marginBottom: 15}]}>
+                        <Text style={[globalStyles.titleText, {textAlign: 'center'}]}>My Wardrobe</Text>
                     </View>
                     
                     {/* Button to add clothes to their wardrobe */}
@@ -246,7 +267,7 @@ export default function WardrobePage({navigation}) {
                     
                     {/* Top clothes box */}
                     <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Top</Text>
-                    <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5}]}>
+                    <View style={[globalStyles.boxWrap, globalStyles.fitScreen, globalStyles.horizontalFlow]}>
                        <SafeAreaView style={{flex:1}}>
                             <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
                                 if(RenderTop(item)){
@@ -263,7 +284,7 @@ export default function WardrobePage({navigation}) {
 
                     {/* Bottom clothes box */}
                     <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Bottom</Text>
-                    <View style={[globalStyles.boxWrap, {width: 312, height: 400, padding: 5,}]}>
+                    <View style={[globalStyles.boxWrap, globalStyles.fitScreen, globalStyles.horizontalFlow]}>
                         <SafeAreaView style={{flex:1}}>
                                 <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
                                     if(RenderBottom(item)){
@@ -277,8 +298,24 @@ export default function WardrobePage({navigation}) {
                                 }}/>
                         </SafeAreaView>
                     </View>
-                    <View>
+                    
+                    {/* Shoes box */}
+                    <Text style={[globalStyles.text, globalStyles.subTitle, {marginTop: 20}]}>Shoes</Text>
+                    <View style={[globalStyles.boxWrap, globalStyles.fitScreen, globalStyles.horizontalFlow, {marginBottom: 20}]}>
+                        <SafeAreaView style={{flex:1}}>
+                                <FlatList horizontal data={wardrobe} keyExtractor={(item) => item.key} renderItem={({item}) => {
+                                    if(RenderShoe(item)){
+                                        return(
+                                            <View style={globalStyles.column}>
+                                                <Image source={{ uri: item.image }} style={[globalStyles.image, {marginTop: 5}]} />
+                                                <Text style={[globalStyles.text, {paddingBottom: 10}]}><Text style={{fontWeight:'bold'}}>{item.category}</Text>: {item.name}</Text>
+                                            </View>
+                                        )
+                                    } 
+                                }}/>
+                        </SafeAreaView>
                     </View>
+
                 </View>
             </ScrollView>
         </LinearGradient>        
