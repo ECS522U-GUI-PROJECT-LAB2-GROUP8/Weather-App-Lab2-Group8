@@ -189,7 +189,6 @@ export default function WardrobePage({navigation}) {
                                         <TextInput
                                             style = {[globalStyles.input, {flex: 1, color: 'white'}]}
                                             placeholder='Enter name...'
-                                            placeholderTextColor={'grey'}
                                             onChangeText={formikProps.handleChange('name')}
                                             value={formikProps.values.name}
                                             onBlur={formikProps.handleBlur('name')}
